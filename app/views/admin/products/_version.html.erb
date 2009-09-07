@@ -1,0 +1,12 @@
+<tr class="version">
+	<td>
+	<% f.fields_for :versions, version do |version_form| %>
+			<%= version_form.text_field :name %>
+		</td>
+		<td><%= version_form.text_field :price, :class => 'right' %></td>
+		<td><%= version_form.text_field :amount, :class => 'right' %></td>
+		<td class="options">
+			<%= version_form.check_box :_delete %>
+		</td>
+	<% end %>
+</tr>

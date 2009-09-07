@@ -1,0 +1,30 @@
+<h2><%= @vendor.new_record? ? 'Nowy producent' : 'Edycja producenta' %></h2>
+
+<div class="box">
+<% form_for [:admin, @vendor] do |f| %>
+	<p>
+    <span>
+    	<%= f.label :name, 'Nazwa: ' %>
+			<%= error_for @vendor, :name %>
+    </span>
+    <%= f.text_field :name %>
+  </p>
+	
+	<% if @vendor.new_record? %>
+	<p class="buttons">
+		<span class="button">
+			<input type="submit" value="Dodaj producenta"/>
+		</span>
+			<span class="clear"></span>
+	</p>
+	<% else %>
+	<p class="buttons">
+		<span class="button"><input type="submit" value="Zapisz zmiany"/></span>
+		 <%= link_to 'anuluj', admin_products_path %>
+		 albo <%= link_to 'usuń', [:admin, @vendor], :method => :delete, :confirm => 'Usunięcie tego producenta spowoduje usunięcie wszystkich produktów do niego przypisanych!' %>
+		<span class="clear"></span>
+	</p>
+	<% end %>
+
+<% end %>
+</div>

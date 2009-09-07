@@ -1,16 +1,34 @@
-<% title "New User Session" %>
+<h2>Logowanie</h2>
 
-<% form_for @user_session do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
-  </p>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </p>
-  <p><%= f.submit "Submit" %></p>
-<% end %>
+<div class="box">
+	<% form_for @user_session do |f| %>
+	  <p>
+	    <span>
+	    	<%= f.label :email, 'E-Mail:' %>
+	    </span>
+	    <%= f.text_field :email %>
+	  </p>
+	  <p>
+	    <span>
+	    	<%= f.label :password, 'Hasło:' %>
+	    </span>
+	    <%= f.password_field :password %>
+	  </p>
+		
+		<p>
+			<%= f.check_box :remember_me %> Zapamiętaj mnie na tym komputerze
+		</p>
+		
+	  <p>
+			<span class="button">
+				<input type="submit" value="Zaloguj"/>
+			</span>
+			<span class="clear"></span>
+		</p>
+		
+	<% end %>
+</div>
+
+
 
 

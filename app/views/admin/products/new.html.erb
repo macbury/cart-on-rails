@@ -1,0 +1,178 @@
+<% form_for [:admin, @product], :html => { :multipart => true, :id => "product_form" } do |f| %>
+<div class="wrapper">
+	<div class="sidebar">
+		<div class="item">
+			<h4>Formatowanie opisu</h4>
+			<p>
+				Domyślnie każdy jeden enter to złamanie linii. Dwa entery tworzą akapit.
+			</p>
+			<ul>
+				<li>
+					h2. nagłówek
+				</li>
+				<li>
+					# lista
+				</li>
+				<li>
+					<em>_emfaza_</em>
+				</li>
+				<li>
+					<strong>*silna emfaza*</strong>
+				</li>
+				<li>
+					<i>__kursywa__</i>
+				</li>
+				<li>
+					<b>**wytłuszczenie**</b>
+				</li>
+				<li>
+					<cite>??źródło cytatu??</cite>
+				</li>
+				<li>
+					<del>-skasowany tekst-</del>
+				</li>
+				<li>
+					<ins>+dostawiony tekst+</ins>
+				</li>
+				<li>
+					^indeks <sup>górny</sup>^
+				</li>
+				<li>
+					~indeks <sub>dolny</sub>~
+				</li>
+				<li>
+					ATJS(A To Jest Skrót) - <acronym title="A To Jest Skrót">ATJS</acronym>
+				</li>
+				<li>
+					"Opis linka":http://example.com - <a href="http://example.com">Opis linka</a>
+				</li>
+				<li>
+					"Opis linka(tytuł etykietki)":http://example.com - <a href="http://example.com" title="tytuł etykietki">Opis linka</a>
+				</li>
+				
+			</ul>
+		</div>
+		
+		<div class="item">
+			<h4>Tag</h4>
+			Tagi oddzielaj przecinkiem np. koszulka, spodnie, odtwarzacz
+		</div>
+		
+		<div class="item">
+			<h4>Wersje produktu</h4>
+			Np. Koszulka czarna M, Koszulka biała M itd.
+		</div>
+		
+		<div class="item">
+			<h4>Zdjęcia produktu</h4>
+			Zaznaczenie opcji koło nazwy zdjęcie spowoduje jego usunięcie podczas zapisu. Możesz też zmienić kolejność zdjęć chwytając za nazwe zdjęcia i przecięgnąć w wybrane miejsce.
+		</div>
+	</div>
+
+	<div class="content">
+		<h2><%= @product.new_record? ? 'Nowy produkt' : 'Edycja produktu' %></h2>
+
+		<div class="box">
+			<p>
+				<span>
+					<%= f.label :name, 'Nazwa:' %>
+					<%= error_for @product, :name %>
+				</span>
+				<%= f.text_field :name %>
+			</p>
+
+		  <p>
+		    <span>
+		    	<%= f.label :description, 'Opis:' %>
+					<%= error_for @product, :description %>
+		    </span>
+		    <%= f.text_area :description %>
+		  </p>
+			
+			<p>
+				<span>
+					<%= f.label :category_id, 'Kategoria:' %>
+					<%= error_for @product, :category_id %>
+				</span>
+				<%= f.select :category_id, self.current_user.categories.map { |c| [c.name, c.id] }, { :include_blank => '[- Nowa kategoria -]' } %>
+				<%= f.text_field :category_name %>
+			</p>
+			
+			<p>
+				<span>
+					<%= f.label :vendor_id, 'Producent:' %>
+					<%= error_for @product, :vendor_id %>
+				</span>
+				<%= f.select :vendor_id, self.current_user.vendors.map { |c| [c.name, c.id] }, { :include_blank => '[- Nowy producent -]' } %>
+				<%= f.text_field :vendor_name %>
+			</p>
+			
+			<p>
+				<span>
+					<%= f.label :vat, 'Podatek VAT:' %>
+				</span>
+				
+				<%= f.select :vat, [22, 7, 3, 0].reverse.map { |i| ["#{i}%", i] } %>
+			</p>
+			
+			<p>
+				<span>
+					<%= f.label :tag_list, 'Tagi:' %>
+				</span>
+				<%= f.text_field :tag_list %>
+			</p>
+			
+			<script type="text/javascript" charset="utf-8">
+				var version_template = <%= render(:partial => '/admin/products/version', :object => @product.versions.new, :locals => { :f => f } ).inspect %>;
+				
+				var photo_template = <%= render(:partial => '/admin/products/photo', :object => @product.photos.new, :locals => { :f => f } ).inspect %>;
+			</script>
+			
+			<h3>
+				Dostępne wersje produktu(<a href="#" id="add_version">Dodaj wersje</a>) <%= error_for @product, :versions %>
+			</h3>
+			
+			<table id="product_versions">
+				<thead>
+					<tr>
+						<th>Nazwa</th>
+						<th width="100px">Cena</th>
+						<th width="120px">Ilość w magazynie</th>
+						<th class="center">Usuń</th>
+					</tr>
+				</thead>
+				
+				<%= render :partial => '/admin/products/version', :collection => @product.versions, :locals => { :f => f } %>
+
+			</table>
+			
+			<h3>
+				Zdjęcia produktu(<a href="#" id="add_photo">Dodaj zdjęcie</a>) <%= error_for @product, :photos %>
+			</h3>
+			
+			<ul class="photos" id="product_photos">
+			<%= render :partial => '/admin/products/photo', :collection => @product.photos, :locals => { :f => f } %>
+			</ul>
+			
+			<div class="clear"></div>
+			
+			<p class="buttons">
+				<% if @product.new_record? %>
+				<span class="button">
+					<input type="submit" value="Dodaj produkt"/>
+				</span>
+				<% else %>
+				<span class="button">
+					<input type="submit" value="Zapisz zmiany"/>
+				</span>
+				 <%= link_to 'anuluj', admin_products_path %>
+				 albo 
+				<%= link_to 'usuń', [:admin, @product], :method => :delete, :confirm => 'Czy na pewno chcesz usunąć ten produkt?' %>
+				<% end %>
+				<span class="clear"></span>
+			</p>
+			
+		</div>
+	</div>
+</div>
+<% end %>

@@ -1,0 +1,41 @@
+<div class="wrapper">
+	<div class="sidebar">
+		<%= link_to 'Dodaj produkt', new_admin_product_path, :class => 'add_button' %>
+		<div class="item">
+			<h4>Filtr</h4>
+			<% form_for @search, :html => { :id => 'filter_form' } do |f| %>
+				<%= f.text_field :name_like, :id => 'search' %>
+				<h3>Kategorie</h3>
+				<ul>
+					<% for category in @categories %>
+					<li>
+						<%= search_check_box :category_id_equals, category.id %> <%= link_to category.name, edit_admin_category_path(category) %>
+					</li>
+					<% end %>
+				</ul>
+				<h3>Producenci</h3>
+				<ul>
+					<% for vendor in @vendors %>
+					<li>
+						<%= search_check_box :vendor_id_equals, vendor.id %> <%= link_to vendor.name, edit_admin_vendor_path(vendor) %>
+					</li>
+					<% end %>
+				</ul>
+			
+			
+			<p class="buttons">
+				<span class="button">
+					<input type="submit" value="Filtruj"/>
+				</span>
+			</p>
+			<div class="clear"></div>
+			<% end %>
+		</div>
+	</div>
+	
+	<div class="content" id="items">
+		<%= render :partial => @products %>
+
+		<%= will_paginate @products %>
+	</div>
+</div>

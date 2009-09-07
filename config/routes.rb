@@ -1,47 +1,37 @@
 ActionController::Routing::Routes.draw do |map|
+
+  map.with_options :name_prefix => 'admin_', :namespace => 'admin/', :subdomain => 'admin', :conditions => { :subdomain => 'admin' } do |admin|
+    admin.resources :vendors
+    admin.resources :categories
+    admin.resources :products, :collection => { :suggest_tag => :any }
+    admin.resources :pages
+    admin.root :controller => "products", :action => 'index', :subdomain => 'admin'
+  end
+  
   map.resources :user_sessions
+  map.login '/login', :controller => 'user_sessions', :action => 'new', :subdomain => 'admin'
+  map.logout '/logout', :controller => 'user_sessions', :action => 'destroy', :subdomain => 'admin'
 
   map.resources :users
-
-  # The priority is based upon order of creation: first created -> highest priority.
-
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
+  map.register '/register', :controller => 'users', :action => 'new'
   
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
 
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-
+  map.with_options :conditions => { :subdomain => /.+/ } do |shop|
+    shop.root :controller => "products", :action => 'index'
+    shop.resources :products
+    shop.product "/:id", :controller => "products", :action => 'show'
+  end
+  
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing the them or commenting them out if you're using named routes and resources.
+  
+  map.asset '/assets/:name.:format', :controller => 'photos', :action => 'fetch_asset'
+  map.photo '/photos/:size/:id.:format', :controller => 'photos', :action => 'generate_photo'
+  map.root :controller => "start", :subdomain => false
+  
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end

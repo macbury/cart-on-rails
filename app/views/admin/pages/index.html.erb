@@ -1,0 +1,19 @@
+<div class="wrapper">
+	<div class="sidebar">
+		<%= link_to 'Dodaj stronę', new_admin_page_path, :class => 'add_button' %>
+		<%= link_to 'Wyślij plik', new_admin_product_path, :class => 'add_button' %>
+		<%= link_to 'Zmień skórkę', new_admin_product_path, :class => 'add_button' %>
+	</div>
+	<div class="content">
+		<h2>Szablony</h2>
+		<ul class="icons">
+			<% for page in @pages %>
+				<li>
+					<%= link_to page.name, edit_admin_page_path(page), :class => page.type_name.downcase %>
+				</li>
+			<% end %>
+		</ul>
+		<div class="clear"></div>
+		
+	</div>
+</div>

@@ -1,0 +1,7 @@
+$('#items').empty().append('<%= escape_javascript(render(:partial => @products)) %>');
+$('.pagination').remove();
+<% if @products.total_pages > @products.current_page %>
+$('#items .item:last-child').after('<%= escape_javascript(will_paginate(@products)) %>');
+<% end %>
+
+refreshItems();

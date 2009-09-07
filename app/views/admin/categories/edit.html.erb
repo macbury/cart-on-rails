@@ -1,0 +1,30 @@
+<h2><%= @category.new_record? ? 'Nowa kategoria' : 'Edycja kategori' %></h2>
+
+<div class="box">
+<% form_for [:admin, @category] do |f| %>
+	<p>
+    <span>
+    	<%= f.label :name, 'Nazwa: ' %>
+			<%= error_for @category, :name %>
+    </span>
+    <%= f.text_field :name %>
+  </p>
+	
+	<% if @category.new_record? %>
+	<p class="buttons">
+		<span class="button">
+			<input type="submit" value="Dodaj kategoria"/>
+		</span>
+			<span class="clear"></span>
+	</p>
+	<% else %>
+	<p class="buttons">
+		<span class="button"><input type="submit" value="Zapisz zmiany"/></span>
+		 <%= link_to 'anuluj', admin_products_path %>
+		 albo <%= link_to 'usuń', [:admin, @category], :method => :delete, :confirm => 'Usunięcie tej kategorii spowoduje usunięcie wszystkich produktów do niej przypisanych!' %>
+		<span class="clear"></span>
+	</p>
+	<% end %>
+
+<% end %>
+</div>

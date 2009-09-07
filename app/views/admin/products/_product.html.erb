@@ -1,0 +1,24 @@
+<div class="item product">
+	<div class="thumb" style="background-image: url(<%= admin_product_photo_url product.main_photo, '125x125' %>);"></div>
+	<div class="body">
+		<h3>
+			<%= link_to product.name, edit_admin_product_path(product) %>
+		</h3>
+		<div class="info">
+			cena <%= price(product) %>
+		</div>
+		<p>
+			<%= truncate product.description, :length => 255 %>
+		</p>
+
+		<a href="javascript:expand();" class="expand">Dostępne wersje produktu</a>
+		<ul class="variants">
+			<% for version in product.versions %>
+			<li class="<%= cycle('normal', 'alt') %>">
+				<span><%= to_zl version.price %></span>
+				<%= version.name %>
+			</li>
+			<% end %>
+		</ul>
+	</div>
+</div>

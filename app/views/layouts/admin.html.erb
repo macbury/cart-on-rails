@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl">
+<head>
+	<title><%= title %></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<%= stylesheet_link_tag 'main.css' %>
+	<%#= javascript_include_tag :named_routes %>
+	<%= javascript_include_tag 'jquery.min.js', 'jquery-ui.min.js','jquery.autocomplete.js', 'admin.js', '/codemirror/js/codemirror.js' %>
+</head>
+<% content_tag :body, :class => @background ? 'clear_background' : 'normal' do %>
+	<div class="header">
+		<% if logged_in? %>
+		<div class="menu">
+			<%= link_to 'Pokaż sklep', root_path(:subdomain => self.current_user.domain) %>
+
+			<%= link_to 'Wyloguj', logout_path %>
+		</div>
+		<% end %>
+		<ul>
+			<% unless logged_in? %>
+			<li>
+				<%= tab_for :register, 'Rejestruj się', register_path  %>
+			</li>
+			<li>
+				<%= tab_for :login, 'Zaloguj się', login_path  %>
+			</li>
+			<% else %>
+				<li>
+					<a href="#">Kokpit</a>
+				</li>
+				<li>
+					<%= tab_for :products, 'Produkty', admin_products_path %>
+				</li>
+				<li>
+					<a href="#">Magazyn</a>
+				</li>
+				<li>
+					<a href="#">Zamównienia</a>
+				</li>
+				<li>
+					<a href="#">Kampanie</a>
+				</li>
+				<li>
+					<a href="#">Ustawienia</a>
+				</li>
+				<li>
+					<%= tab_for :pages, 'Szablony', admin_pages_path %>
+				</li>
+			<% end %>
+		</ul>
+
+	</div>
+
+	<%= render_flash %>
+	
+	<%= yield %>
+
+<% end %>
+</html>

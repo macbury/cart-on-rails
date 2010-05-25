@@ -7,11 +7,17 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
+  config.gem 'sitemap_generator', :lib => false, :source => 'http://gemcutter.org'
+  config.gem 'less', :source => 'http://gemcutter.org', :lib => false
+  config.gem 'meta-tags', :lib => 'meta_tags', :source => 'http://gemcutter.org'
+  config.gem 'declarative_authorization'
+  config.gem 'searchlogic'
+	config.gem 'RedCloth', :lib => "redcloth"
   config.gem 'authlogic'
+	config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org/'
   config.gem 'searchlogic'
   config.gem 'mini_magick'
   config.gem 'liquid'
-  config.gem 'RedCloth'
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.

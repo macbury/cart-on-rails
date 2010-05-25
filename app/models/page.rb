@@ -1,6 +1,7 @@
 class Page < ActiveRecord::Base
   belongs_to :user
-  has_one :layout, :class_name => "Page", :foreign_key => "layout_id"
+	has_many :pages, :class_name => "Page", :foreign_key => "layout_id", :dependent => :nullify
+	belongs_to :layout, :class_name => "Page", :foreign_key => "layout_id"
   validates_presence_of :content, :name
   xss_terminate :except => [:content]
   

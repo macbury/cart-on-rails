@@ -46,7 +46,7 @@ em {
 	background-position: 0 -45px;
 }
 
-.validation_error {
+.validation_flash_error {
 	color: red;
 }
 
@@ -290,20 +290,20 @@ ul {
 	color: #666;
 }
 
-.notice {
+.flash_notice {
 	background: #A4E1A2 url('/images/icon-success.png') 20px center no-repeat;
 	color: #094808;
 	text-shadow: #C0FDE3 0px 1px 0px;
 	border-bottom: 1px solid #DDE3D7;
 }
 
-.error, .notice {
+.flash_error, .flash_flash_notice {
 	margin:0 0 3px 0; 
 	font-size: 18px;
 	padding: 10px 60px;
 }
 
-.error {
+.flash_error {
 	background: #AF2B2B url('/images/icon-error.png') 20px center no-repeat;
 	color: #fff;
 	border-bottom: 1px solid #DA3536;
@@ -394,14 +394,9 @@ textarea {
 	width: 90%;
 }
 
-select {
-	width: 200px;
-	margin-right: 10px;
-}
-
-.webadress {
+#shop_domain {
 	width: 200px !important;
-	margin: 0 5px;
+	margin-right: 5px;
 }
 
 .buttons {

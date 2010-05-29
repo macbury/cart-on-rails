@@ -3,10 +3,13 @@ class Page < ActiveRecord::Base
 	has_many :pages, :class_name => "Page", :foreign_key => "layout_id", :dependent => :nullify
 	belongs_to :layout, :class_name => "Page", :foreign_key => "layout_id"
   validates_presence_of :content, :name
+	validates_uniqueness_of :name, :scope => :shop_id
   xss_terminate :except => [:content]
   
   @@types = ['Layout', 'Page', 'Snippet']
   
+	attr_protected :shop_id, :default
+
   def self.types
     a = []
     @@types.each_with_index do |type, index|

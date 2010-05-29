@@ -14,7 +14,7 @@ class PhotosController < ApplicationController
 			size = "#{width}x#{height}"
 			size += "#" if crop =~ /c/i
 			
-			Dir.mkdir("#{RAILS_ROOT}/public/store_assets/#{shop.domain}/photos/#{params[:size]}/") rescue true
+			Dir.mkdir(File.join([shop.public_folder_path, "/photos/#{params[:size]}/"])) rescue true
 			#image = MiniMagick::Image.from_file(photo.source)
 			#image.resize 
 			#image.write(file_path)

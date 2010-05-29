@@ -14,6 +14,7 @@
 <h2><%= @page.new_record? ? 'Nowy szablon' : 'Edycja szablonu' %></h2>
 <div class="box editor">
 	<% form_for [:admin, @page] do |f| %>
+		<% unless @page.default %>
 		<p>
 			<span>
 				<%= f.label :name, 'Nazwa' %>
@@ -21,6 +22,7 @@
 			</span>
 			<%= f.text_field :name %>
 		</p>
+		<% end %>
 		<p>
 			<span>
 				<%= f.label :page_type, 'Typ' %>
@@ -45,10 +47,13 @@
 		
 		<p class="buttons">
 			<span class="button">
-				<input type="submit" value="Zapisz "/>
+				<%= f.submit "Zapisz" %>
+			</span>
+			<span class="button">
+				<%= f.submit "Zapisz i dalej edytuj" %>
 			</span>
 			 <%= link_to 'anuluj', admin_pages_path %>
-			<% unless @page.new_record? %>
+			<% if !(@page.new_record? || @page.default) %>
 				 albo 
 				<%= link_to 'usuń', [:admin, @page], :method => :delete, :confirm => 'Czy na pewno chcesz usunąć ten produkt?' %>
 			<% end %>

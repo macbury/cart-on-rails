@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
   has_permalink :name, :update => true
   validates_presence_of :name, :description
   validates_length_of :name, :within => 3..255
-  validates_associated :category, :vendor, :versions, :photos
+  validates_associated :photos
   
   validate :has_one_version
   
@@ -12,18 +12,15 @@ class Product < ActiveRecord::Base
 	radius_attr_accessible :name, :min_price, :max_price, :description
 	
   has_many :photos, :dependent => :destroy, :order => 'position ASC'
-  has_many :versions, :dependent => :destroy, :order => 'price ASC'
   
-  accepts_nested_attributes_for :versions, :allow_destroy => true, :reject_if => proc { |a| a['name'].blank? || a['price'].to_f == 0.0 }
+  #accepts_nested_attributes_for :versions, :allow_destroy => true, :reject_if => proc { |a| a['name'].blank? || a['price'].to_f == 0.0 }
   
   accepts_nested_attributes_for :photos, :allow_destroy => true, :reject_if => proc { |a| a['image'].nil? }
   
-  belongs_to :category
   belongs_to :shop
-  belongs_to :vendor
   
-  attr_accessor :category_name, :vendor_name
-  before_save :create_category_and_vendor
+  #attr_accessor :category_name, :vendor_name
+  #before_save :create_category_and_vendor
   before_save :cache_price
 
   def main_photo

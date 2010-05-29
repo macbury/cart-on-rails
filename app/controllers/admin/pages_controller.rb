@@ -6,7 +6,7 @@ class Admin::PagesController < ApplicationController
 	filter_resource_access
 
   def index
-    @pages = @shop.pages.all(:order => 'page_type ASC')
+    @pages = @shop.pages.all(:order => 'page_type ASC').sort { |a,b| a.page_type <=> b.page_type }.group_by { |page| page.page_type }
     
     respond_to do |format|
       format.html # index.html.erb
@@ -79,7 +79,7 @@ class Admin::PagesController < ApplicationController
   # DELETE /admin_themes/1
   # DELETE /admin_themes/1.xml
   def destroy
-    @page = @shop.pages.find(params[:id])
+    @page = @shop.pages.find_by_id_and_default(params[:id], false)
     @page.destroy
 
     respond_to do |format|

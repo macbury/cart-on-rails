@@ -1,6 +1,21 @@
 class ProductsDrop < Radius::Drop
+	include ActionView::Helpers::NumberHelper
 	
 	register_tag "product:vendors" do |variable|
+		
+	end
+	
+	# return current product formatted price 
+	register_tag "product:price" do |tag|
+		tag.locals.product rescue tag.missing!
+		
+		product = tag.locals.product
+		
+		if product.max_price.round == product.min_price.round
+			number_to_currency(tag.locals.product.max_price, :separator => ",", :delimiter => " ", :unit => "") + ' zł'
+		else
+			'od '	+ number_to_currency(tag.locals.product.min_price, :separator => ",", :delimiter => " ", :unit => "") + ' zł do ' + number_to_currency(tag.locals.product.max_price, :separator => ",", :delimiter => " ", :unit => "") + ' zł'
+		end
 		
 	end
 	

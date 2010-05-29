@@ -23,10 +23,10 @@ $(document).ready(function () {
 	$('input:checkbox').check_box();
 	
 	setTimeout(function () {
-		$('.notice, .error').slideUp();
+		$('.flash_notice, .flash_error').slideUp();
 	}, 5000);
 	
-	$('.notice, .error').hover(function () {
+	$('.flash_notice, .flash_error').hover(function () {
 		$(this).slideUp();
 	});
 	

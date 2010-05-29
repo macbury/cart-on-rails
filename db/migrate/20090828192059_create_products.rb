@@ -4,6 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name
       t.string :permalink
       t.text :description
+			t.bool :published, :default => false
       t.integer :shop_id
       t.timestamps
     end

@@ -4,22 +4,16 @@ module ApplicationHelper
     link_to name, link, :class => @current_tab == tab ? 'selected' : 'normal'
   end
   
-  def error_for(object, name)
-    out = ""
-    errors = object.errors.on(name)
-    
-    unless errors.nil?
-      msg = errors.class == Array ? errors.join(', ') : errors
-      out += content_tag :span, " - #{msg}", :class => 'validation_error'
-    end
-    
-    return out
-  end
+	def inline_errors(object, attribute)
+		errors = object.errors.on(attribute)
+		
+		content_tag :p, errors.class == Array ? errors.join(', ') : errors, :class => 'inline-errors' unless errors.nil?
+	end
   
   def render_flash
     out = ""
     flash.each do |type, msg|
-      out += content_tag :div, msg, :class => type
+      out += content_tag :div, msg, :class => "flash_#{type}"
     end
     flash.discard
     return out

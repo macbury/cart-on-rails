@@ -1,21 +1,22 @@
 class CreateShops < ActiveRecord::Migration
   def self.up
     create_table :shops do |t|
-      t.string :first_name
+			t.string :domain
+			t.string :title
+      
+			t.string :street
+			t.string :city
+			t.string :zip_code
+			t.string :phone
+
+			t.string :first_name
       t.string :last_name
-      t.string :domain
       t.boolean :sex
       t.date :birthdate
 
       t.timestamps
     end
 
-		remove_column :users, :domain
-		remove_column :users, :last_name
-		remove_column :users, :first_name
-		remove_column :users, :sex
-		remove_column :users, :birthdate
-		
 		add_column :users, :shop_id, :integer
   end
 

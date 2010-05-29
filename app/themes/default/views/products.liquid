@@ -1,0 +1,27 @@
+<div id="layout-left">
+<h1>Nasze produkty</h1>
+<shop:empty for="products">
+  <p>Brak Produktów</p>
+</shop:empty>
+<div class="clear"></div>
+<shop:products>
+  <div style="float:left; margin: 5px">
+    <div class="gallery-image">
+      <shop:product link="true">
+        <shop:photo size="160x117" crop="true" />
+      </shop:product>
+    </div>
+    <div class="clear"></div>
+    <div class="gallery-info">
+      <shop:product /><br />
+      <small><shop:product:price /></small>
+    </div>
+  </div>
+</shop:products>
+
+  <div class="clear"></div>
+
+</div>
+
+<shop:snippet name="Sidebar" />
+​

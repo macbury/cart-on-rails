@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   def index
     @products = @shop.products.all(:include => [:photos, :tags])
     
-    render_radius_template 'products', { :products => @products }
+    render_radius_template 'Products', { :products => @products }
   end
   
   def show
@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
 		rescue ActiveRecord::RecordNotFound
 			render_radius_template '404', {}
 		else
-			render_radius_template 'product', { :product => @product }
+			render_radius_template 'Product', { :product => @product }
 		end
 
   end

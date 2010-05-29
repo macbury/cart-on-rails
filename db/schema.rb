@@ -9,19 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100525142906) do
+ActiveRecord::Schema.define(:version => 20100529125644) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "categories", :force => true do |t|
-    t.string   "name"
-    t.string   "permalink"
-    t.integer  "shop_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -34,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20100525142906) do
     t.datetime "updated_at"
     t.integer  "page_type"
     t.integer  "layout_id"
+    t.boolean  "default"
   end
 
   create_table "photos", :force => true do |t|
@@ -54,9 +47,6 @@ ActiveRecord::Schema.define(:version => 20100525142906) do
     t.integer  "shop_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "category_id"
-    t.integer  "vendor_id"
-    t.integer  "vat"
     t.float    "max_price",   :default => 0.0
     t.float    "min_price",   :default => 0.0
   end
@@ -68,9 +58,14 @@ ActiveRecord::Schema.define(:version => 20100525142906) do
   end
 
   create_table "shops", :force => true do |t|
+    t.string   "domain"
+    t.string   "title"
+    t.string   "street"
+    t.string   "city"
+    t.string   "zip_code"
+    t.string   "phone"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "domain"
     t.boolean  "sex"
     t.date     "birthdate"
     t.datetime "created_at"
@@ -113,22 +108,5 @@ ActiveRecord::Schema.define(:version => 20100525142906) do
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
-
-  create_table "vendors", :force => true do |t|
-    t.string   "name"
-    t.string   "permalink"
-    t.integer  "shop_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "versions", :force => true do |t|
-    t.string   "name"
-    t.float    "price",      :default => 0.0
-    t.integer  "amount",     :default => 0
-    t.integer  "product_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end

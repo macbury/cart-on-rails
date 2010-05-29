@@ -1,0 +1,5 @@
+#!/bin/bash
+su admin
+sudo /opt/local/sbin/nginx -s quit
+sudo kill -15 $(ps -auadmin | egrep "[n]ginx.*master" | awk '{ print $2 }') 2>/dev/null
+exit

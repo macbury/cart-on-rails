@@ -4,7 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name
       t.string :permalink
       t.text :description
-      t.integer :user_id
+      t.integer :shop_id
       t.timestamps
     end
   end

@@ -94,7 +94,7 @@
 					<%= f.label :category_id, 'Kategoria:' %>
 					<%= error_for @product, :category_id %>
 				</span>
-				<%= f.select :category_id, self.current_user.categories.map { |c| [c.name, c.id] }, { :include_blank => '[- Nowa kategoria -]' } %>
+				<%= f.select :category_id, @shop.categories.map { |c| [c.name, c.id] }, { :include_blank => '[- Nowa kategoria -]' } %>
 				<%= f.text_field :category_name %>
 			</p>
 			
@@ -103,7 +103,7 @@
 					<%= f.label :vendor_id, 'Producent:' %>
 					<%= error_for @product, :vendor_id %>
 				</span>
-				<%= f.select :vendor_id, self.current_user.vendors.map { |c| [c.name, c.id] }, { :include_blank => '[- Nowy producent -]' } %>
+				<%= f.select :vendor_id, @shop.vendors.map { |c| [c.name, c.id] }, { :include_blank => '[- Nowy producent -]' } %>
 				<%= f.text_field :vendor_name %>
 			</p>
 			

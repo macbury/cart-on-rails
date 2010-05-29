@@ -13,7 +13,7 @@
 	<div class="header">
 		<% if logged_in? %>
 		<div class="menu">
-			<%= link_to 'Pokaż sklep', root_path(:subdomain => self.current_user.domain) %>
+			<%= link_to 'Pokaż sklep', root_path(:subdomain => self.current_user.shop.domain) %>
 
 			<%= link_to 'Wyloguj', logout_path %>
 		</div>

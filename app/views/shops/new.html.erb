@@ -1,0 +1,84 @@
+<h2>Rejestracja</h2>
+
+<div class="box">
+<% form_for @shop do |f| %>
+	
+	<p>
+		<span>
+			<%= f.label :domain, 'Adres www sklepu:' %>
+			<%= error_for @shop, :domain %>
+		</span>
+		http://<%= f.text_field :domain, :class => "webadress" %>.sklep.pl
+	</p>
+	
+	<h3>Dane osobowe</h3>
+	<p>
+    <span>
+    	<%= f.label :first_name, 'Imie:' %>
+			<%= error_for @shop, :first_name %>
+    </span>
+    <%= f.text_field :first_name %>
+  </p>
+	<p>
+    <span>
+    	<%= f.label :last_name, 'Nazwisko:' %>
+			<%= error_for @shop, :last_name %>
+    </span>
+    <%= f.text_field :last_name %>
+  </p>
+	<p>
+    <span>
+    	<%= f.label :sex, 'Płeć:' %>
+			<%= error_for @shop, :sex %>
+    </span>
+    <%= f.radio_button :sex, 0 %> Mężczyzna <%= f.radio_button :sex, 1 %> Kobieta
+  </p>
+	<p>
+    <span>
+    	<%= f.label :birthdate, 'Data urodzenia:' %>
+			<%= error_for @shop, :birthdate %>
+    </span>
+    <%= f.date_select :birthdate, :end_year => Time.now.year - 18, :start_year => 1920 %>
+  </p>
+	
+	<% f.fields_for :users do |user| %>
+	<h3>Panel administracyjny</h3>
+  <p>
+    <span>
+    	<%= user.label :email, 'E-Mail:' %>
+			<%= error_for @user, :email %>
+    </span>
+    <%= user.text_field :email %>
+  </p>
+  <p>
+    <span>
+    	<%= user.label :password, 'Hasło:' %>
+			<%= error_for @user, :password %>
+    </span>
+    <%= user.password_field :password %>
+  </p>
+  <p>
+    <span>
+    	<%= user.label :password_confirmation, 'Powtórz hasło:' %>
+			<%= error_for @user, :password_confirmation %>
+    </span>
+    <%= user.password_field :password_confirmation %>
+  </p>
+	<% end %>
+	<p>
+		<span>
+			<%= f.label :regulamin %>
+			<%= error_for @shop, :regulamin %>
+		</span>
+		<%= f.check_box :regulamin %> Akceptuje regulamin serwisu
+	</p>
+	
+  <p class="buttons">
+		<span class="button">
+			<input type="submit" value="Utwórz konto"/>
+		</span>
+		<span class="clear"></span>
+	</p>
+
+<% end %>
+</div>

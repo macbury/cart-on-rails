@@ -1,16 +1,20 @@
 class ProductsController < ApplicationController
   before_filter :get_store
-  layout :shop
-  
+
   def index
-    @products = @shop.products.all(:include => [:photos])
+    @products = @shop.products.all(:include => [:photos, :tags])
     
-    render_liquid_template 'products', { 'products' => @products }
+    render_radius_template 'products', { :products => @products }
   end
   
   def show
-    @product = @shop.products.find_by_permalink(params[:id])
-    
-    render_liquid_template 'product', { 'product' => @product }
+		begin
+    	@product = @shop.products.find_by_permalink!(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			render_radius_template '404', {}
+		else
+			render_radius_template 'product', { :product => @product }
+		end
+
   end
 end

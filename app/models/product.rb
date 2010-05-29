@@ -9,6 +9,8 @@ class Product < ActiveRecord::Base
   
   is_taggable :tags
   
+	radius_attr_accessible :name, :min_price, :max_price, :description
+	
   has_many :photos, :dependent => :destroy, :order => 'position ASC'
   has_many :versions, :dependent => :destroy, :order => 'price ASC'
   
@@ -17,19 +19,25 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :photos, :allow_destroy => true, :reject_if => proc { |a| a['image'].nil? }
   
   belongs_to :category
-  belongs_to :user
+  belongs_to :shop
   belongs_to :vendor
   
   attr_accessor :category_name, :vendor_name
   before_save :create_category_and_vendor
   before_save :cache_price
-  
-  liquid_methods :category, :main_photo, :name, :description, :vendor, :versions, :photos, :permalink, :max_price, :min_price
-  
+
   def main_photo
     photos.first
   end
-  
+	
+	def photo
+		main_photo
+	end
+	
+	def to_param
+		self.permalink
+	end
+
   protected
     
     def has_one_version
@@ -43,7 +51,7 @@ class Product < ActiveRecord::Base
     end
     
     def create_category_and_vendor
-      self.category = Category.find_or_create_by_name_and_user_id(@category_name.strip, self.user_id) if self.category_id.nil? && (!@category_name.nil? || !@category_name.blank?)
-      self.vendor = Vendor.find_or_create_by_name_and_user_id(@vendor_name.strip, self.user_id) if self.vendor_id.nil? && (!@vendor_name.nil? || !@vendor_name.blank?)
+      self.category = Category.find_or_create_by_name_and_shop_id(@category_name.strip, self.shop_id) if self.category_id.nil? && (!@category_name.nil? || !@category_name.blank?)
+      self.vendor = Vendor.find_or_create_by_name_and_shop_id(@vendor_name.strip, self.shop_id) if self.vendor_id.nil? && (!@vendor_name.nil? || !@vendor_name.blank?)
     end
 end

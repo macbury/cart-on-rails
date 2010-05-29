@@ -13,13 +13,15 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy', :subdomain => 'admin'
 
   map.resources :users
-  map.register '/register', :controller => 'users', :action => 'new'
   
-
+	map.resources :shops
+	map.register '/register', :controller => 'shops', :action => 'new'
+  
   map.with_options :conditions => { :subdomain => /.+/ } do |shop|
     shop.root :controller => "products", :action => 'index'
-    shop.resources :products
-    shop.product "/:id", :controller => "products", :action => 'show'
+    #shop.product "/:id", :controller => "products", :action => 'show'
+		shop.resources :products
+		shop.resources :tags
   end
   
   # See how all your routes lay out with "rake routes"

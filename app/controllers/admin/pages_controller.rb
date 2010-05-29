@@ -1,12 +1,12 @@
 class Admin::PagesController < ApplicationController
   tab :pages
-  title 'Szablon'
   layout 'admin'
   background true, :except => [:index]
-  before_filter :login_required
+	before_filter :login_required, :get_store_from_session
+	filter_resource_access
 
   def index
-    @pages = self.current_user.pages.all(:order => 'page_type ASC')
+    @pages = @shop.pages.all(:order => 'page_type ASC')
     
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +17,7 @@ class Admin::PagesController < ApplicationController
   # GET /admin_themes/1
   # GET /admin_themes/1.xml
   def show
-    @page = self.current_user.pages.find(params[:id])
+    @page = @shop.pages.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -28,7 +28,7 @@ class Admin::PagesController < ApplicationController
   # GET /admin_themes/new
   # GET /admin_themes/new.xml
   def new
-    @page = self.current_user.pages.new
+    @page = @shop.pages.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,14 +38,14 @@ class Admin::PagesController < ApplicationController
 
   # GET /admin_themes/1/edit
   def edit
-    @page = self.current_user.pages.find(params[:id])
+    @page = @shop.pages.find(params[:id])
     render :action => "new"
   end
 
   # POST /admin_themes
   # POST /admin_themes.xml
   def create
-    @page = self.current_user.pages.new(params[:page])
+    @page = @shop.pages.new(params[:page])
 
     respond_to do |format|
       if @page.save
@@ -62,7 +62,7 @@ class Admin::PagesController < ApplicationController
   # PUT /admin_themes/1
   # PUT /admin_themes/1.xml
   def update
-    @page = Page.find(params[:id])
+    @page = @shop.pages.find(params[:id])
 
     respond_to do |format|
       if @page.update_attributes(params[:page])
@@ -79,7 +79,7 @@ class Admin::PagesController < ApplicationController
   # DELETE /admin_themes/1
   # DELETE /admin_themes/1.xml
   def destroy
-    @page = Page.find(params[:id])
+    @page = @shop.pages.find(params[:id])
     @page.destroy
 
     respond_to do |format|

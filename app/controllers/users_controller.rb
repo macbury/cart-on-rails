@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   tab :register
-  title 'Rejestracja'
   background true
+
   layout 'admin'
   
   def new

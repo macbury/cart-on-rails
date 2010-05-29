@@ -1,9 +1,9 @@
 class UserSessionsController < ApplicationController
   tab :login
-  title 'Logowanie'
   background true
   layout 'admin'
-  
+  before_filter :admin_domain_required
+
   def new
     @user_session = UserSession.new
   end

@@ -1,9 +1,11 @@
 class Admin::ProductsController < ApplicationController
   tab :products
-  title 'Produkty'
-  #background true, :only => [:new, :edit, :update, :create]
   layout 'admin'
-  before_filter :login_required
+	
+	before_filter :login_required, :get_store_from_session
+	filter_access_to [:create, :new, :suggest_tag]
+  filter_access_to [:show, :edit, :destroy, :update], :attribute_check => true,
+                          :load_method => lambda { @product = @shop.products.find_by_permalink!(params[:id]) }
   
   def suggest_tag
     @tags = Tag.all(:conditions => { :name.like => "%#{params[:q]}" })
@@ -14,11 +16,11 @@ class Admin::ProductsController < ApplicationController
   # GET /products
   # GET /products.xml
   def index
-    @search = self.current_user.products.search(params[:search])
+    @search = @shop.products.search(params[:search])
     @products = @search.paginate(:per_page => 5, :page => params[:page], :order => 'name ASC', :include => [:versions, :photos])
     
-    @vendors = self.current_user.vendors.all(:order => 'name ASC')
-    @categories = self.current_user.categories.all(:order => 'name ASC')
+    @vendors = @shop.vendors.all(:order => 'name ASC')
+    @categories = @shop.categories.all(:order => 'name ASC')
     
     respond_to do |format|
       format.html
@@ -30,8 +32,6 @@ class Admin::ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.xml
   def show
-    @product = Product.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @product }
@@ -53,14 +53,13 @@ class Admin::ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
-    @product = self.current_user.products.find(params[:id])
     render :action => "new"
   end
 
   # POST /products
   # POST /products.xml
   def create
-    @product = self.current_user.products.new(params[:product])
+    @product = @shop.products.new(params[:product])
 
     respond_to do |format|
       if @product.save
@@ -77,7 +76,6 @@ class Admin::ProductsController < ApplicationController
   # PUT /products/1
   # PUT /products/1.xml
   def update
-    @product = self.current_user.products.find(params[:id])
 
     respond_to do |format|
       if @product.update_attributes(params[:product])
@@ -94,7 +92,7 @@ class Admin::ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.xml
   def destroy
-    @product = self.current_user.products.find(params[:id])
+
     @product.destroy
     flash[:notice] = 'Produkt został usunięty!' 
     

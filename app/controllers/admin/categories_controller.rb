@@ -1,12 +1,12 @@
 class Admin::CategoriesController < ApplicationController
   tab :products
-  title 'Kategorie'
   layout 'admin'
-  background true
-  before_filter :login_required
+  background true, :except => [:index]
+	before_filter :login_required, :get_store_from_session
+	filter_resource_access
   
   def create
-    @category = self.current_user.categories.new(params[:category])
+    @category = @shop.categories.new(params[:category])
     if @category.save
       flash[:notice] = "Dodano kategorię"
       redirect_to admin_products_path
@@ -16,18 +16,18 @@ class Admin::CategoriesController < ApplicationController
   end
   
   def destroy
-    @category = self.current_user.categories.find(params[:id])
+    @category = @shop.categories.find(params[:id])
     @category.destroy
     flash[:notice] = "Usunięto kategorie."
     redirect_to admin_products_path
   end
   
   def edit
-    @category = self.current_user.categories.find(params[:id])
+    @category = @shop.categories.find(params[:id])
   end
   
   def update
-    @category = self.current_user.categories.find(params[:id])
+    @category = @shop.categories.find(params[:id])
     if @category.update_attributes(params[:category])
       flash[:notice] = "Zapisano zmiany w kategorii"
       redirect_to admin_products_path

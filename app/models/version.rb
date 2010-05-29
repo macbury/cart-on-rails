@@ -4,6 +4,4 @@ class Version < ActiveRecord::Base
   
   validates_presence_of :name
   attr_accessible :name, :price, :amount
-  
-  liquid_methods :name, :price, :amount
 end

@@ -1,6 +1,8 @@
+PHOTO_SCALE_REGEXP = /(\d{1,5})([xc])(\d{1,5})/i
+
 class Photo < ActiveRecord::Base
   belongs_to :product
-  
+
   xss_terminate
   has_attached_file :image, 
                     :url  => "/photos/original/:id.:extension",
@@ -13,8 +15,10 @@ class Photo < ActiveRecord::Base
   
   attr_accessible :image
   
-  liquid_methods :url, :image_file_name, :id
-  
+	def to_radius
+		[:url]
+	end
+
   def url
     image.url
   end

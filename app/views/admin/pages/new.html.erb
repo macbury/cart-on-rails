@@ -31,7 +31,7 @@
 			<span>
 				<%= f.label :layout_id, 'Layout' %>
 			</span>
-			<%= f.select :layout_id, self.current_user.pages.all(:conditions => { :page_type => 0 }).map { |page| [page.name, page.id] }, { :include_blank => 'Brak layoutu' } %>
+			<%= f.select :layout_id, @shop.pages.all(:conditions => { :page_type => 0 }).map { |page| [page.name, page.id] }, { :include_blank => 'Brak layoutu' } %>
 		<% end %>
 		<p>
 			<span>

@@ -8,7 +8,6 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   config.gem 'sitemap_generator', :lib => false, :source => 'http://gemcutter.org'
-  config.gem 'less', :source => 'http://gemcutter.org', :lib => false
   config.gem 'meta-tags', :lib => 'meta_tags', :source => 'http://gemcutter.org'
   config.gem 'declarative_authorization'
   config.gem 'searchlogic'
@@ -17,13 +16,13 @@ Rails::Initializer.run do |config|
 	config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org/'
   config.gem 'searchlogic'
   config.gem 'mini_magick'
-  config.gem 'liquid'
+  config.gem 'radius'
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
 
   # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  config.load_paths += %W( #{RAILS_ROOT}/app/drops )
 
   # Specify gems that this application depends on and have them installed with rake gems:install
   # config.gem "bj"

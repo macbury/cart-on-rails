@@ -7,6 +7,6 @@ class Tagging < ActiveRecord::Base
   protected
   
     def set_user
-      self.user_id = taggable.user_id
+      self.shop_id = taggable.shop_id
     end
 end

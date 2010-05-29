@@ -43,7 +43,7 @@ module SubdomainFu
   def self.subdomain_from(host)
     return nil unless host
     parts = host.split('.')
-    sub = parts[0..-(SubdomainFu.tld_size+2)].join(".")
+    sub = parts.first
     sub.blank? ? nil : sub
   end
   
@@ -88,7 +88,8 @@ module SubdomainFu
   end
   
   def self.current_subdomain(request)
-    subdomain = request.subdomains(SubdomainFu.tld_size).join(".")
+		subdomain = request.subdomains(SubdomainFu.tld_size).join(".")
+		
     if has_subdomain?(subdomain)
       subdomain
     else

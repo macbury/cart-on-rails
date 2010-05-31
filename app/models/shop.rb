@@ -9,6 +9,7 @@ class Shop < ActiveRecord::Base
 	validates_format_of :zip_code, :with => /^\d{2,3}-\d{3,4}$/
 	validates_exclusion_of :domain, :in => %w( support blog www billing help api login admin )
 	validates_and_formats_phones :phone, '###-###-###', '(###) ### ### #'
+	validate :validate_owner, :on => :create
 	
 	validates_inclusion_of :birthdate,
 	    :in => Date.new(1900)..18.years.ago.to_date,
@@ -16,13 +17,25 @@ class Shop < ActiveRecord::Base
 	
 	has_many :users, :dependent => :destroy
 	has_many :products, :dependent => :destroy
-	has_many :pages, :dependent => :destroy		
+	has_many :option_types, :dependent => :destroy
+	has_many :prototypes, :dependent => :destroy
+	has_many :properties, :dependent => :destroy
+	has_many :themes, :dependent => :destroy		
 
-	attr_protected :users
+	attr_accessor :email, :password, :password_confirmation
 	
 	before_validation :downcase_subdomain
-	after_create :setup_folder
+	after_create :setup_folder, :create_owner, :load_defult_template
 	after_destroy :delete_folder
+
+	def validate_owner
+		u = User.new(:email => self.email, :password => self.password, :password_confirmation => self.password_confirmation)
+		unless u.valid?
+			u.errors.each do |attribute, error|
+				self.errors.add attribute, error
+			end
+		end
+	end
 	
 	def public_folder_path
 		File.join([[Rails.root, "/public/store_assets/#{domain}/"]])
@@ -30,11 +43,19 @@ class Shop < ActiveRecord::Base
 	
 	def setup_folder
 		Dir.mkdir(public_folder_path) rescue true
-		FileUtils.cp_r File.join([Rails.root,'/app/themes/default/assets/']), public_folder_path
+	end
+	
+	def create_owner
+		u = self.users.create(:email => self.email, :password => self.password, :password_confirmation => self.password_confirmation)
+		u.owner!
 	end
 	
 	def delete_folder
 		FileUtils.rm_r(public_folder_path) rescue true
+	end
+	
+	def load_defult_template
+		Theme.install_template_for_shop('default', self)
 	end
 	
 	protected

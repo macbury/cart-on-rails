@@ -1,0 +1,20 @@
+<h1>Editing prototype</h1>
+
+<% form_for(@prototype) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :shop_id %><br />
+    <%= f.text_field :shop_id %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @prototype %> |
+<%= link_to 'Back', prototypes_path %>

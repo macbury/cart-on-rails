@@ -85,10 +85,11 @@ class ApplicationController < ActionController::Base
 	end
 
   def render_radius_template(name, variables={})
-		template = @shop.pages.find_by_page_type_and_name(Page.type_index('Page'), name)
+		template = @shop.themes.find_by_page_type_and_name(Theme.type_index('Page'), name)
 
 		standard_variables = { 
-			:shop => @shop
+			:shop => @shop,
+			:title => @shop.title
 		}
 		standard_variables.merge!(variables)
 
@@ -97,7 +98,7 @@ class ApplicationController < ActionController::Base
 		parser.define_tag 'snippet' do |tag|
 			snippet_name = tag['name']
 			
-			snippet = @shop.pages.find_by_page_type_and_name(Page.type_index('Snippet'), snippet_name)
+			snippet = @shop.themes.find_by_page_type_and_name(Theme.type_index('Snippet'), snippet_name)
 			
 			if snippet_name.nil? || snippet.nil?
 				"<strong>Error:</strong> undefined snippet '#{tag['name']}'"

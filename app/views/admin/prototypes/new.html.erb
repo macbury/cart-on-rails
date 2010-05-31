@@ -1,0 +1,15 @@
+<h1>New prototype</h1>
+
+<% semantic_form_for([:admin, @prototype]) do |f| %>
+	<% f.inputs do %>
+		<%= f.input :name %>
+	<% end %>
+	
+
+	
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', admin_prototypes_path %>

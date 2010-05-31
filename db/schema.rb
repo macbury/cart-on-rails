@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100529125644) do
+ActiveRecord::Schema.define(:version => 20100530193654) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -18,15 +18,19 @@ ActiveRecord::Schema.define(:version => 20100529125644) do
     t.datetime "updated_at"
   end
 
-  create_table "pages", :force => true do |t|
-    t.integer  "shop_id"
+  create_table "option_types", :force => true do |t|
     t.string   "name"
-    t.text     "content"
+    t.integer  "shop_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "page_type"
-    t.integer  "layout_id"
-    t.boolean  "default"
+    t.string   "presentation"
+  end
+
+  create_table "option_values", :force => true do |t|
+    t.integer  "option_type_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "photos", :force => true do |t|
@@ -49,6 +53,21 @@ ActiveRecord::Schema.define(:version => 20100529125644) do
     t.datetime "updated_at"
     t.float    "max_price",   :default => 0.0
     t.float    "min_price",   :default => 0.0
+  end
+
+  create_table "properties", :force => true do |t|
+    t.string   "name"
+    t.integer  "shop_id"
+    t.string   "presentation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "prototypes", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "roles", :force => true do |t|
@@ -88,6 +107,17 @@ ActiveRecord::Schema.define(:version => 20100529125644) do
   end
 
   add_index "tags", ["name", "kind"], :name => "index_tags_on_name_and_kind"
+
+  create_table "themes", :force => true do |t|
+    t.integer  "shop_id"
+    t.string   "name"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "page_type"
+    t.integer  "layout_id"
+    t.boolean  "default"
+  end
 
   create_table "users", :force => true do |t|
     t.datetime "created_at"

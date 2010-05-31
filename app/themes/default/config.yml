@@ -1,0 +1,5 @@
+name: "Vogue"
+views:
+  layout: ['products', '404', 'product']
+
+snippets: ['sidebar']

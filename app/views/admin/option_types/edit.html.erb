@@ -1,0 +1,20 @@
+<h1>Editing option_types</h1>
+
+<% form_for(@option_types) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :shop_id %><br />
+    <%= f.text_field :shop_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @option_types %> |
+<%= link_to 'Back', option_types_path %>

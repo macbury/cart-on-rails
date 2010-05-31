@@ -1,0 +1,25 @@
+<div class="wrapper">
+	<div class="sidebar">
+	</div>
+	
+	<div class="content" id="items">
+		<h1>Listing prototypes</h1>
+
+		<table>
+		  <tr>
+		    <th>Name</th>
+		  </tr>
+
+		<% @prototypes.each do |prototype| %>
+		  <tr>
+		    <td><%= link_to prototype.name, edit_admin_prototype_path(prototype) %></td>
+		    <td><%= link_to 'Destroy', [:admin, prototype], :confirm => 'Are you sure?', :method => :delete %></td>
+		  </tr>
+		<% end %>
+		</table>
+
+		<br />
+
+		<%= link_to 'New prototype', new_admin_prototype_path %>
+	</div>
+</div>

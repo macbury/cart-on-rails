@@ -6,6 +6,27 @@ $(document).ajaxSend(function(event, request, settings) {
 });
 
 $(document).ready(function () {
+	$('#shop_title').blur(function() {
+		var domain = $(this).val().replace(" ","-").replace(/[^a-z0-9-]+/i,"").toLowerCase();
+		if ($('#shop_domain').val() == "") {
+			$('#shop_domain').val(domain);
+		}
+	});
+	
+	$('#option_type_presentation').blur(function() {
+		var domain = $(this).val().replace(" ","_").replace(/[^a-z0-9_]+/i,"").toLowerCase();
+		if ($('#option_type_name').val() == "") {
+			$('#option_type_name').val(domain);
+		}
+	});
+	
+	$('#property_presentation').blur(function() {
+		var domain = $(this).val().replace(" ","_").replace(/[^a-z0-9_]+/i,"").toLowerCase();
+		if ($('#property_name').val() == "") {
+			$('#property_name').val(domain);
+		}
+	});
+	
 	$('.header ul a:not(.selected)').mouseover(function () {
 		$(this).animate({
 			'line-height': '28px',

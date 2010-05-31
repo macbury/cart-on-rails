@@ -397,6 +397,7 @@ textarea {
 #shop_domain {
 	width: 200px !important;
 	margin-right: 5px;
+	text-align: right;
 }
 
 .buttons {

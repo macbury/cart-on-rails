@@ -13,8 +13,6 @@ class Product < ActiveRecord::Base
 	
   has_many :photos, :dependent => :destroy, :order => 'position ASC'
   
-  #accepts_nested_attributes_for :versions, :allow_destroy => true, :reject_if => proc { |a| a['name'].blank? || a['price'].to_f == 0.0 }
-  
   accepts_nested_attributes_for :photos, :allow_destroy => true, :reject_if => proc { |a| a['image'].nil? }
   
   belongs_to :shop

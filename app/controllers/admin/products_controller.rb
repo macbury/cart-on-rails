@@ -17,11 +17,8 @@ class Admin::ProductsController < ApplicationController
   # GET /products.xml
   def index
     @search = @shop.products.search(params[:search])
-    @products = @search.paginate(:per_page => 5, :page => params[:page], :order => 'name ASC', :include => [:versions, :photos])
-    
-    @vendors = @shop.vendors.all(:order => 'name ASC')
-    @categories = @shop.categories.all(:order => 'name ASC')
-    
+    @products = @search.paginate(:per_page => 5, :page => params[:page], :order => 'name ASC', :include => [:photos])
+
     respond_to do |format|
       format.html
       format.js

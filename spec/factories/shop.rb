@@ -9,6 +9,10 @@ Factory.define :good_shop, :class => Shop do |f|
 	f.zip_code "26-110"
 	f.phone "423684727"
 	f.birthdate 19.years.ago.to_date	
+	
+	f.email "edek@pedek.pl"
+	f.password "password"
+	f.password_confirmation "password"
 end
 
 Factory.define :bad_shop, :class => Shop do |f|
@@ -22,4 +26,8 @@ Factory.define :bad_shop, :class => Shop do |f|
 	f.zip_code "24566-135510"
 	f.phone "4236847272334324"
 	f.birthdate 2.years.ago.to_date	
+	
+	f.email "edeas"
+	f.password "password_with_shit"
+	f.password_confirmation ""
 end

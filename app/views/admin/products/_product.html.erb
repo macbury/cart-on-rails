@@ -13,12 +13,12 @@
 
 		<a href="javascript:expand();" class="expand">Dostępne wersje produktu</a>
 		<ul class="variants">
-			<% for version in product.versions %>
-			<li class="<%= cycle('normal', 'alt') %>">
-				<span><%= to_zl version.price %></span>
-				<%= version.name %>
+			<%# for version in product.versions %>
+			<li class="<%#= cycle('normal', 'alt') %>">
+				<span><%#= to_zl version.price %></span>
+				<%#= version.name %>
 			</li>
-			<% end %>
+			<%# end %>
 		</ul>
 	</div>
 </div>

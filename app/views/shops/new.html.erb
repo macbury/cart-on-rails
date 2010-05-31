@@ -28,12 +28,11 @@
 		<%= f.input :phone %>
 	<% end %>
 	
-	<% f.fields_for :users do |user| %>
-		<% user.inputs :name => "Panel administracyjny" do %>
-			<%= user.input :email %>
-			<%= user.input :password, :as => :password %>
-			<%= user.input :password_confirmation, :as => :password %>
-		<% end %>
+
+	<% f.inputs :name => "Panel administracyjny" do %>
+		<%= f.input :email %>
+		<%= f.input :password, :as => :password %>
+		<%= f.input :password_confirmation, :as => :password %>
 	<% end %>
 	
 	<p>

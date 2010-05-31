@@ -1,0 +1,17 @@
+<div class="wrapper">
+	<div class="sidebar">
+		<%= link_to 'Dodaj stronę', new_admin_theme_path, :class => 'add_button' %>
+		<%= link_to 'Wyślij plik', new_admin_product_path, :class => 'add_button' %>
+		<%= link_to 'Zmień skórkę', new_admin_product_path, :class => 'add_button' %>
+	</div>
+	<div class="content">
+		<ul class="icons">
+		<% @themes.each do |template| %>
+			<li>
+				<%= link_to template.name.camelize, edit_admin_theme_path(template), :class => template.type_name.downcase %>
+			</li>
+		<% end %>
+		</ul>
+		<div class="clear"></div>
+	</div>
+</div>

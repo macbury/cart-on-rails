@@ -1,0 +1,24 @@
+<h1>Editing property</h1>
+
+<% form_for(@property) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :shop_id %><br />
+    <%= f.text_field :shop_id %>
+  </p>
+  <p>
+    <%= f.label :presentation %><br />
+    <%= f.text_field :presentation %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @property %> |
+<%= link_to 'Back', properties_path %>

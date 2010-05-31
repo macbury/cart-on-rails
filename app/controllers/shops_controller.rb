@@ -15,11 +15,8 @@ class ShopsController < ApplicationController
 
   def create
     @shop = Shop.new(params[:shop])
-		@user = @shop.users.new(params[:shop][:users])
-		@user.shop = @shop
 		
-    if (@shop.valid? && @user.valid?) && (@shop.save && @user.save)
-			@user.owner!
+    if @shop.save
 			flash[:notice] = 'Sklep został utworzony'
 			redirect_to admin_products_path
     else

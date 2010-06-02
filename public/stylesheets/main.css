@@ -389,9 +389,7 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
 }
 
 textarea {
-	height: 200px;
 	font-size: 12px;
-	width: 90%;
 }
 
 #shop_domain {
@@ -619,7 +617,7 @@ table a {
 	border-color: #0080FF;
 }
 
-.photos > li > .desc {
+.photos > li .desc {
 	position: relative;
 	z-index: 10;
 	display: block;
@@ -629,7 +627,7 @@ table a {
 	cursor: move;
 }
 
-.photos > li > .desc span {
+.photos > li .desc span {
 	text-overflow: ellipsis;
 	overflow-x: hidden;
 	display: block;
@@ -639,7 +637,7 @@ table a {
 	border-color: #FF0080;
 }
 
-.photos > li > input[type="file"] {
+.photos > li input[type="file"] {
 	width: 113px;
 	height: 113px;
 	cursor: pointer;

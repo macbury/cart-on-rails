@@ -5,7 +5,13 @@
 		<%= f.input :name %>
 	<% end %>
 	
-
+	<% f.inputs :name => "Atrybuty" do %>
+		<%= f.input :option_types, :as => :check_boxes, :collection => @shop.option_types %>
+	<% end %>
+	
+	<% f.inputs :name => "Szczegóły" do %>
+		<%= f.input :properties, :as => :check_boxes, :collection => @shop.properties %>
+	<% end %>
 	
   <p>
     <%= f.submit 'Create' %>

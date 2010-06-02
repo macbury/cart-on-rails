@@ -39,8 +39,6 @@ class Admin::ProductsController < ApplicationController
   # GET /products/new.xml
   def new
     @product = Product.new
-    @product.versions.build
-    @product.photos.build
     
     respond_to do |format|
       format.html # new.html.erb
@@ -50,7 +48,7 @@ class Admin::ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
-    render :action => "new"
+		@product.photos.build if @product.photos.empty?
   end
 
   # POST /products
@@ -61,7 +59,7 @@ class Admin::ProductsController < ApplicationController
     respond_to do |format|
       if @product.save
         flash[:notice] = 'Produkt został dodany!'
-        format.html { redirect_to admin_products_path }
+        format.html { redirect_to edit_admin_product_path(@product) }
         format.xml  { render :xml => @product, :status => :created, :location => @product }
       else
         format.html { render :action => "new" }

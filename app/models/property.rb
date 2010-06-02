@@ -1,5 +1,6 @@
 class Property < ActiveRecord::Base
 	belongs_to :shop
+	has_and_belongs_to_many :prototype
 	xss_terminate
 	validates_presence_of :name, :presentation
 	validates_uniqueness_of :name, :scope => :shop_id

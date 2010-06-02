@@ -1,6 +1,6 @@
 authorization do
   role :owner do
-    has_permission_on :admin_products, :admin_themes, :admin_prototypes, :admin_option_types, :admin_properties, :to => [:index, :manage, :view]
+    has_permission_on :admin_products, :admin_themes, :admin_prototypes, :admin_option_types, :admin_properties, :admin_product_photos, :to => [:index, :manage, :view]
     #has_permission_on :authorization_rules, :to => :read
   end
 end

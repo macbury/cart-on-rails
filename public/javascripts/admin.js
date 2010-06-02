@@ -49,6 +49,7 @@ $(document).ready(function () {
 	
 	$('.flash_notice, .flash_error').hover(function () {
 		$(this).slideUp();
+		return false;
 	});
 	
 	

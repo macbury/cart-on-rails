@@ -1,11 +1,9 @@
 class Product < ActiveRecord::Base
   xss_terminate
   has_permalink :name, :update => true
-  validates_presence_of :name, :description
+  validates_presence_of :name
   validates_length_of :name, :within => 3..255
   validates_associated :photos
-  
-  validate :has_one_version
   
   is_taggable :tags
   
@@ -13,13 +11,11 @@ class Product < ActiveRecord::Base
 	
   has_many :photos, :dependent => :destroy, :order => 'position ASC'
   
-  accepts_nested_attributes_for :photos, :allow_destroy => true, :reject_if => proc { |a| a['image'].nil? }
-  
   belongs_to :shop
   
-  #attr_accessor :category_name, :vendor_name
+  attr_accessor :prototype_id
   #before_save :create_category_and_vendor
-  before_save :cache_price
+  #before_save :cache_price
 
   def main_photo
     photos.first
@@ -34,10 +30,6 @@ class Product < ActiveRecord::Base
 	end
 
   protected
-    
-    def has_one_version
-      errors.add :versions, 'musi być przynajmniej jedna wersja produktu' if versions.size == 0
-    end
     
     def cache_price
       prices = versions.map(&:price)

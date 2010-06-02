@@ -6,6 +6,6 @@ class Prototype < ActiveRecord::Base
 	
 	attr_protected :shop_id
 	
-	#has_many :options, :dependent => :destroy
-	#validates_associated :options
+	has_and_belongs_to_many :option_types, :autosave => true
+	has_and_belongs_to_many :properties, :autosave => true
 end

@@ -6,6 +6,7 @@ class OptionType < ActiveRecord::Base
 	
 	attr_protected :shop_id
 	has_many :option_values, :dependent => :destroy
+	has_and_belongs_to_many :prototypes
 	
 	before_save :format_name
 	

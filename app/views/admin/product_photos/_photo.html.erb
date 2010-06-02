@@ -1,0 +1,12 @@
+<li style="background-image: url(<%= admin_product_photo_url(photo, '113x113') %>);">
+	<% form_for photo.new_record? ? admin_product_product_photos_path(@product) : admin_product_product_photo_path(@product, photo) do |photo_form| %>
+		<div class="desc">
+			<%= photo_form.hidden_field :position %>
+			<%= photo_form.check_box :_delete unless photo.new_record? %>
+			<span>
+				<%= photo.name %>
+			</span>
+		</div>
+		<%= photo_form.file_field :image %>
+	<% end %>
+</li>

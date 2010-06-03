@@ -1,34 +1,28 @@
-<h2>Logowanie</h2>
+<div class="block small center login">
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
 
-<div class="box">
-	<% form_for @user_session do |f| %>
-	  <p>
-	    <span>
-	    	<%= f.label :email, 'E-Mail:' %>
-	    </span>
-	    <%= f.text_field :email %>
-	  </p>
-	  <p>
-	    <span>
-	    	<%= f.label :password, 'Hasło:' %>
-	    </span>
-	    <%= f.password_field :password %>
-	  </p>
-		
-		<p>
-			<%= f.check_box :remember_me %> Zapamiętaj mnie na tym komputerze
-		</p>
-		
-	  <p>
-			<span class="button">
-				<input type="submit" value="Zaloguj"/>
-			</span>
-			<span class="clear"></span>
-		</p>
-		
-	<% end %>
+		<h2>Logowanie</h2>
+	</div>
+	<div class="block_content">
+		<% form_for @user_session do |f| %>
+		  <p>
+				<%= f.label :email, 'E-Mail:' %> <br />
+		    <%= f.text_field :email, :class => "text" %>
+		  </p>
+		  <p>
+				<%= f.label :password, 'Hasło:' %><br />
+		    <%= f.password_field :password, :class => "text" %>
+		  </p>
+			<p>
+				<input type="submit" class="submit" value="Zaloguj" /> &nbsp; 
+				<%= f.check_box :remember_me %> <label>Zapamiętaj mnie na tym komputerze</label>
+			</p>
+
+		<% end %>
+	</div>
+	
+	<div class="bendl"></div>
+	<div class="bendr"></div>
 </div>
-
-
-
-

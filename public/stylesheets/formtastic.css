@@ -19,7 +19,7 @@ form.formtastic ol, form.formtastic ul { list-style:none; }
 form.formtastic abbr, form.formtastic acronym { border:0; font-variant:normal; }
 form.formtastic input, form.formtastic textarea, form.formtastic select { font-family:inherit; font-size:inherit; font-weight:inherit; }
 form.formtastic input, form.formtastic textarea, form.formtastic select { font-size:100%; }
-form.formtastic legend { white-space:normal; color:#000; }
+form.formtastic legend { white-space:normal; }
 
 
 /* SEMANTIC ERRORS
@@ -37,7 +37,7 @@ form.formtastic fieldset ol { }
 form.formtastic fieldset.buttons li { float:left; padding-right:0.5em; }
 
 /* clearfixing the fieldsets */
-form.formtastic fieldset { display: inline-block; }
+form.formtastic fieldset { display: inline-block; width: 100%; }
 form.formtastic fieldset:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 html[xmlns] form.formtastic fieldset { display: block; }
 * html form.formtastic fieldset { height: 1%; }
@@ -45,10 +45,10 @@ html[xmlns] form.formtastic fieldset { display: block; }
 
 /* INPUT LIs
 --------------------------------------------------------------------------------------------------*/
-form.formtastic fieldset > ol > li { margin-bottom:1.5em; }
+form.formtastic fieldset > ol > li { margin-bottom:1.5em; display: block; width: 100%; }
 
 /* clearfixing the li's */
-form.formtastic fieldset > ol > li { display: inline-block; }
+form.formtastic fieldset > ol > li { display: block; width: 100%; }
 form.formtastic fieldset > ol > li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 html[xmlns] form.formtastic fieldset > ol > li { display: block; }
 * html form.formtastic fieldset > ol > li { height: 1%; }

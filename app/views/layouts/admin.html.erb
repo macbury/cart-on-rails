@@ -1,61 +1,44 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
    
-<html xmlns="http://www.w3.org/1999/xhtml" lang="pl">
+<html>
 <head>
 	<title><%= title %></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<%= stylesheet_link_tag 'formtastic', 'formtastic_changes', 'main' %>
-	<%#= javascript_include_tag :named_routes %>
-	<%= javascript_include_tag 'jquery.min.js', 'jquery-ui.min.js','jquery.autocomplete.js', 'admin.js', '/codemirror/js/codemirror.js' %>
+	<%= stylesheet_link_tag 'formtastic', 'formtastic_changes', 'admin', 'jquery.wysiwyg' %>
+	<%= javascript_include_tag 'lib/jquery.js', 'lib/jquery.wysiwyg', '/codemirror/js/codemirror.js', 'controllers/application_controller', 'controllers/themes_controller' %>
 </head>
-<% content_tag :body, :class => @background ? 'clear_background' : 'normal' do %>
-	<div class="header">
-		<% if logged_in? %>
-		<div class="menu">
-			<%= link_to 'Pokaż sklep', root_path(:subdomain => self.current_user.shop.domain) %>
-
-			<%= link_to 'Wyloguj', logout_path %>
+<body>
+	<div class="wrapper">
+		<div class="header">
+			<div class="hdrl"></div>
+			<div class="hdrr"></div>
+			<h1>CoR</h1>
+			<ul class="nav">
+				<li><a href="#">Kokpit</a></li>
+				<li><a href="#">Zamówienia</a></li>
+				<li><a href="#">Magazyn</a></li>
+				<li><%= link_to "Produkty", admin_products_path %></li>
+				<li><%= link_to "Szablony", admin_themes_path %></li>
+				<li><a href="#">Ustawienia</a></li>
+			</ul>
+			<div class="user">
+				<%= link_to "Pokaż sklep", root_path(:subdomain => self.current_user.shop.domain) %> | <%= link_to 'Wyloguj', logout_path %>
+			</div>
+		</div>
+	
+		<% flash.each do |type, message| %>
+		<div class="message <%= type %>">
+			<p><%= message %></p>
+			<span class="close"></span>
 		</div>
 		<% end %>
-		<ul>
-			<% unless logged_in? %>
-			<li>
-				<%= tab_for :register, 'Rejestruj się', register_path  %>
-			</li>
-			<li>
-				<%= tab_for :login, 'Zaloguj się', login_path  %>
-			</li>
-			<% else %>
-				<li>
-					<a href="#">Kokpit</a>
-				</li>
-				<li>
-					<%= tab_for :products, 'Produkty', admin_products_path %>
-				</li>
-				<li>
-					<a href="#">Magazyn</a>
-				</li>
-				<li>
-					<a href="#">Zamównienia</a>
-				</li>
-				<li>
-					<a href="#">Kampanie</a>
-				</li>
-				<li>
-					<a href="#">Ustawienia</a>
-				</li>
-				<li>
-					<%= tab_for :themes, 'Szablony', admin_themes_path %>
-				</li>
-			<% end %>
-		</ul>
-
-	</div>
-
-	<%= render_flash %>
 	
-	<%= yield %>
+		<%= yield %>
 
-<% end %>
+		<footer>
+			<p class="left">Cart on Rails</p>
+			<p class="right">by Arkadiusz Buras</p>
+		</footer>
+	</div>
+</body>
 </html>

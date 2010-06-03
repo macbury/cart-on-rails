@@ -1,8 +1,5 @@
 class ShopsController < ApplicationController
-	tab :register
-  background true
-
-  layout 'admin'
+  layout 'login'
 
   def index
     redirect_to admin_products_path

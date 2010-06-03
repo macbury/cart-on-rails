@@ -1,21 +1,34 @@
-<h1>New prototype</h1>
+<!-- BLOCK START -->
+	<div class="block">
+		<!-- BLOCK HEAD START -->
+		<div class="block_head">
+			<div class="bheadl"></div>
+			<div class="bheadr"></div>
+			
+			<h2><%= @prototype.new_record? ? "Nowy szablony produktów" : "Edycja szablonu produktu" %></h2>
+			<ul>
+				<li><%= link_to 'Wróć', admin_prototypes_path %></li>
+			</ul>
+		</div>
+		<!-- BLOCK HEAD END -->
+		
+		<!-- BLOCK CONTENT START -->
+		<div class="block_content">
+			<% semantic_form_for([:admin, @prototype]) do |f| %>
+				<% f.inputs do %>
+					<%= f.input :name, :class => "text" %>
 
-<% semantic_form_for([:admin, @prototype]) do |f| %>
-	<% f.inputs do %>
-		<%= f.input :name %>
-	<% end %>
-	
-	<% f.inputs :name => "Atrybuty" do %>
-		<%= f.input :option_types, :as => :check_boxes, :collection => @shop.option_types %>
-	<% end %>
-	
-	<% f.inputs :name => "Szczegóły" do %>
-		<%= f.input :properties, :as => :check_boxes, :collection => @shop.properties %>
-	<% end %>
-	
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
-<% end %>
+					<%= f.input :option_types, :as => :check_boxes, :collection => @shop.option_types %>
 
-<%= link_to 'Back', admin_prototypes_path %>
+					<%= f.input :properties, :as => :check_boxes, :collection => @shop.properties %>
+				<% end %>
+				<hr />
+ 				<%= f.submit 'Create', :class => "submit" %>
+			<% end %>
+		</div>
+		<!-- BLOCK CONTENT END -->
+		
+		<div class="bendl"></div>
+		<div class="bendr"></div>
+	</div>
+<!-- BLOCK END -->

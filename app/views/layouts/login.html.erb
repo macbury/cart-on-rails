@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+   
+<html>
+<head>
+	<title><%= title %></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<%= stylesheet_link_tag 'formtastic', 'formtastic_changes', 'admin' %>
+</head>
+<body>
+	<div class="wrapper">
+		<% flash.each do |type, message| %>
+		<div class="message <%= type %>">
+			<p><%= message %></p>
+			<span classs="close"></span>
+		</div>
+		<% end %>
+		
+		<%= yield %>
+	</div>
+	
+</body>
+</html>

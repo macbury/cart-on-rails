@@ -1,12 +1,13 @@
 class Theme < ActiveRecord::Base
+	@@types = ['Layout', 'Page', 'Snippet']
   belongs_to :shop
 	has_many :themes, :class_name => "Theme", :foreign_key => "layout_id", :dependent => :nullify
 	belongs_to :layout, :class_name => "Theme", :foreign_key => "layout_id"
   validates_presence_of :content, :name
 	validates_uniqueness_of :name, :scope => :shop_id
   xss_terminate :except => [:content]
-  
-  @@types = ['Layout', 'Page', 'Snippet']
+  validates_inclusion_of :page_type, :in => 0..@@types.size
+
   
 	attr_protected :shop_id, :default
 	

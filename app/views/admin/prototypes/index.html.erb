@@ -1,25 +1,56 @@
-<div class="wrapper">
-	<div class="sidebar">
+<!-- BLOCK START -->
+	<div class="block withsidebar">
+		<!-- BLOCK HEAD START -->
+		<div class="block_head">
+			<div class="bheadl"></div>
+			<div class="bheadr"></div>
+			
+			<h2>Szablony produktów</h2>
+		</div>
+		<!-- BLOCK HEAD END -->
+		
+		<!-- BLOCK CONTENT START -->
+		<div class="block_content">
+			<!-- BLOCK CONTENT SIDEBAR START -->
+			<div class="sidebar">
+				<ul class="sidemenu">
+					<%= sidebar_for_products %>
+				</ul>
+				<p>
+					<strong>Twoje szablony</strong><br/>
+					bla bla bla
+				</p>
+			</div>
+			<!-- BLOCK CONTENT SIDEBAR END -->
+			
+			<!-- BLOCK CONTENT SIDEBAR CONTENT START -->
+			<div class="sidebar_content">
+				<table width="100%" cellpading="0" cellspacing="0">
+					<tbody>
+						<tr>
+							<th>Nazwa</th>
+							<th> </th>
+						</tr>
+						<% for prototype in @prototypes %>
+						<tr>
+							<td><%= link_to prototype.name, edit_admin_prototype_path(prototype) %></td>
+							<td><%= link_to "Usuń", [:admin, prototype], :method => :delete, :confirm => "Czy na pewno chcesz usunąć szablon?" %></td>
+						</tr>
+						<% end %>
+						<tr>
+							<td colspan="2">
+								<%= link_to "Nowy szablon", new_admin_prototype_path, :class => "add" %>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- BLOCK CONTENT SIDEBAR CONTENT END -->
+			
+		</div>
+		<!-- BLOCK CONTENT END -->
+		
+		<div class="bendl"></div>
+		<div class="bendr"></div>
 	</div>
-	
-	<div class="content" id="items">
-		<h1>Listing prototypes</h1>
-
-		<table>
-		  <tr>
-		    <th>Name</th>
-		  </tr>
-
-		<% @prototypes.each do |prototype| %>
-		  <tr>
-		    <td><%= link_to prototype.name, edit_admin_prototype_path(prototype) %></td>
-		    <td><%= link_to 'Destroy', [:admin, prototype], :confirm => 'Are you sure?', :method => :delete %></td>
-		  </tr>
-		<% end %>
-		</table>
-
-		<br />
-
-		<%= link_to 'New prototype', new_admin_prototype_path %>
-	</div>
-</div>
+<!-- BLOCK END -->

@@ -1,7 +1,32 @@
-<% semantic_form_for [:admin, @product] do |f| %>
-	<% f.inputs do %>
-		<%= f.input :name %>
-		<%= f.input :prototype_id, :as => :select, :include_blank => true, :collection => @shop.prototypes %>
-	<% end %>
-	<%= f.submit "Dalej" %>
-<% end %>
+
+<!-- BLOCK START -->
+	<div class="block">
+		<!-- BLOCK HEAD START -->
+		<div class="block_head">
+			<div class="bheadl"></div>
+			<div class="bheadr"></div>
+			
+			<h2>Nowy produkt</h2>
+			<ul>
+				<li><%= link_to 'Wróć', admin_prototypes_path %></li>
+			</ul>
+		</div>
+		<!-- BLOCK HEAD END -->
+		
+		<!-- BLOCK CONTENT START -->
+		<div class="block_content">
+			<% semantic_form_for [:admin, @product] do |f| %>
+				<% f.inputs do %>
+					<%= f.input :name %>
+					<%= f.input :prototype_id, :as => :select, :include_blank => true, :collection => @shop.prototypes %>
+				<% end %>
+				<hr />
+				<%= f.submit "Dalej", :class => "submit" %>
+			<% end %>
+		</div>
+		<!-- BLOCK CONTENT END -->
+		
+		<div class="bendl"></div>
+		<div class="bendr"></div>
+	</div>
+<!-- BLOCK END -->

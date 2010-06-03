@@ -1,5 +1,5 @@
 class Admin::PrototypesController < ApplicationController
-	tab :products
+	tab :prototypes
   layout 'admin'
 	
 	before_filter :login_required, :get_store_from_session

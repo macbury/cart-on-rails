@@ -1,18 +1,65 @@
-<div class="wrapper">
-	<div class="sidebar">
-		<%= link_to 'Dodaj produkt', new_admin_product_path, :class => 'add_button' %>
-		<div class="item">
-			<ul>
-				<li><%= link_to "Prototyp", admin_prototypes_path %></li>
-				<li><%= link_to "Szczegóły", admin_properties_path %></li>
-				<li><%= link_to "Atrybuty", admin_option_types_path %></li>
-			</ul>
+<!-- BLOCK START -->
+	<div class="block withsidebar">
+		<!-- BLOCK HEAD START -->
+		<div class="block_head">
+			<div class="bheadl"></div>
+			<div class="bheadr"></div>
+			
+			<h2>Produkty</h2>
+			
+			<form>
+				<input type="text" name="some_name" class="text" value="Nazwa lub SKU"  />
+			</form>
 		</div>
+		<!-- BLOCK HEAD END -->
+		
+		<!-- BLOCK CONTENT START -->
+		<div class="block_content">
+			<!-- BLOCK CONTENT SIDEBAR START -->
+			<div class="sidebar">
+				<ul class="sidemenu">
+					<%= sidebar_for_products %>
+				</ul>
+				<p>
+					<strong>Twoje produkty</strong><br/>
+					Na tej stronie znajdują się wszystkie produkty dostępne w twoim sklepie
+				</p>
+			</div>
+			<!-- BLOCK CONTENT SIDEBAR END -->
+			
+			<!-- BLOCK CONTENT SIDEBAR CONTENT START -->
+			<div class="sidebar_content">
+				<table width="100%" cellpading="0" cellspacing="0">
+					<tbody>
+						<tr>
+							<th>Nazwa</th>
+							<th>SKU</th>
+							<th>Status</th>
+							<td> </td>
+						</tr>
+						<% for product in @products %>
+						<tr>
+							<td><%= link_to product.name, edit_admin_product_path(product) %></td>
+							<td>...</td>
+							<td>Niewidoczny</td>
+							<td><%= link_to "Usuń", [:admin, product], :method => :delete, :confirm => "Czy na pewno chcesz usunąć produkt?" %></td>
+						</tr>
+						<% end %>
+						<tr>
+							<td colspan="4">
+								<%= link_to "Nowy produkt", new_admin_product_path, :class => "add" %>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<%= will_paginate @products, :class => "right" %>
+			</div>
+			<!-- BLOCK CONTENT SIDEBAR CONTENT END -->
+			
+		</div>
+		<!-- BLOCK CONTENT END -->
+		
+		<div class="bendl"></div>
+		<div class="bendr"></div>
 	</div>
-	
-	<div class="content" id="items">
-		<%= render :partial => @products %>
-
-		<%= will_paginate @products %>
-	</div>
-</div>
+<!-- BLOCK END -->

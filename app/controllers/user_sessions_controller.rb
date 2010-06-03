@@ -1,7 +1,5 @@
 class UserSessionsController < ApplicationController
-  tab :login
-  background true
-  layout 'admin'
+  layout 'login'
   before_filter :admin_domain_required
 
   def new

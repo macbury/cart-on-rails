@@ -14,4 +14,14 @@ module SidebarsHelper
 		out.join("\n")
 	end
 	
+	def sidebar_for_product
+		out = []
+		out << sidebar_item_for(:products, "Informacje", edit_admin_product_path(@product))
+		out << sidebar_item_for(:photos, "Zdjęcia", admin_product_product_photos_path(@product))
+		out << sidebar_item_for(:properties, "Szczegóły", admin_product_path(@product))
+		out << sidebar_item_for(:option_types, "Wersje", admin_product_path(@product))
+		
+		out.join("\n")
+	end
+	
 end

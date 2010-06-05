@@ -4,8 +4,9 @@
 <head>
 	<title><%= title %></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<%= stylesheet_link_tag 'formtastic', 'formtastic_changes', 'admin', 'jquery.wysiwyg' %>
-	<%= javascript_include_tag 'lib/jquery.js', 'lib/jquery.wysiwyg', '/codemirror/js/codemirror.js', 'controllers/application_controller', 'controllers/themes_controller' %>
+	<%= stylesheet_link_tag 'formtastic', 'formtastic_changes', 'admin', 'jquery.wysiwyg', 'jquery.fancybox' %>
+	<%= javascript_include_tag 'lib/jquery.js', 'lib/jquery-ui.js', 'lib/jquery.fancybox', 'lib/jquery.wysiwyg', '/codemirror/js/codemirror.js', 'controllers/application_controller', 'controllers/themes_controller', 'controllers/products_controller' %>
+	<%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
 </head>
 <body>
 	<div class="wrapper">

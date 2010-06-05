@@ -619,18 +619,44 @@ a:hover {
   display: block;
   float: left;
   position: relative;
-  margin: 13px 17px 10px 10px;
+  margin: 9px 12px 5px 5px;
   border: 1px solid #cccccc;
   padding: 1px;
   box-shadow: 0 0 3px #cccccc;
   -moz-box-shadow: 0 0 3px #cccccc;
   -webkit-box-shadow: 0 0 3px #cccccc;
 }
+.block .block_content .imglist li.upload_photo {
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 2px dashed #cccccc;
+  font-size: 32px;
+  color: #cccccc;
+  text-align: center;
+  line-height: 100px;
+  cursor: pointer;
+}
+.block .block_content .imglist li iframe { display: none; }
+.block .block_content .imglist li.upload_photo input {
+  cursor: pointer;
+  border: 0px;
+  height: 100px;
+  position: absolute;
+  width: 100px;
+  opacity: 0;
+}
+.block .block_content .imglist li.uploading { background: #ffffff url('/images/admin/uploading.gif') no-repeat center center; }
 .block .block_content .imglist li img {
   position: absolute;
   z-index: 1;
   width: 100px;
   height: 100px;
+  cursor: move;
 }
 .block .block_content .imglist li ul {
   position: absolute;
@@ -666,8 +692,8 @@ a:hover {
   text-shadow: 0 0 2px #000000;
   outline: none;
 }
-.block .block_content .imglist li ul li.view a:hover { background: url(../images/admin/imgt.gif) bottom center no-repeat; }
-.block .block_content .imglist li ul li.delete a:hover { background: url(../images/admin/imgb.gif) top center no-repeat; }
+.block .block_content .imglist li ul li.view a:hover { background: url(/images/admin/imgt.gif) bottom center no-repeat !important; }
+.block .block_content .imglist li ul li.delete a:hover { background: url(/images/admin/imgb.gif) top center no-repeat !important; }
 footer {
   background: url(../images/admin/ft.gif) 0 0 repeat-x;
   padding: 10px 0 50px;
@@ -717,5 +743,6 @@ div.wysiwyg {
   -o-border-radius: 3px;
   border-radius: 3px;
   padding: 0px;
+  margin-top: 5px;
   width: 100% !important;
 }

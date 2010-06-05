@@ -1,6 +1,6 @@
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function () {
-		$('#product_description').wysiwyg();
+		products_controller.init();
 	});
 </script>
 <!-- BLOCK START -->
@@ -22,10 +22,7 @@
 			<!-- BLOCK CONTENT SIDEBAR START -->
 			<div class="sidebar">
 				<ul class="sidemenu">
-					<li class="active"><a href="#">Informacje</a></li>
-					<li><a href="#">Zdjęcia</a></li>
-					<li><a href="#">Szczegóły</a></li>
-					<li><a href="#">Wersje</a></li>
+					<%= sidebar_for_product %>
 				</ul>
 			</div>
 			<!-- BLOCK CONTENT SIDEBAR END -->

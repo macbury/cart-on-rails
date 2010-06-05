@@ -1,42 +1,49 @@
 class Admin::ProductPhotosController < ApplicationController
-	tab :products
+	tab :photos
   layout 'admin'
 
 	before_filter :login_required, :get_store_from_session, :preload_product
-	filter_access_to [:create, :new]
+	filter_access_to [:create, :new, :positions]
   filter_access_to [:show, :edit, :destroy, :update], :attribute_check => true,
-                          :load_method => lambda { @product_photo = @product.photos.find_by_permalink!(params[:id]) }
+                          :load_method => lambda { @product_photo = @product.photos.find(params[:id]) }
 	
   def index
     @product_photos = @product.photos.all
-		@product_photos << @product.photos.build if @product_photos.empty?
   end
   
   def create
-    @product_photos = ProductPhotos.new(params[:product_photos])
-    if @product_photos.save
-      flash[:notice] = "Successfully created product photos."
-      redirect_to product_photos_url
+    @product_photo = @product.photos.new(params[:photo])
+    if @product_photo.save
+			render :json => { :url => @product_photo.image.url(:thumb), :partial => render_to_string(:partial => "admin/product_photos/photo", :object => @product_photo) }
     else
-      render :action => 'new'
+      render :json => { :error => @product_photo.errors.full_messages.join(", ") }
     end
   end
   
   def destroy
-    @product_photos = ProductPhotos.find(params[:id])
-    @product_photos.destroy
-    flash[:notice] = "Successfully destroyed product photos."
-    redirect_to product_photos_url
+    @product_photo.destroy
+
+		respond_to do |format|
+			format.html do 
+				flash[:notice] = "Zdjęcie zostało usunięte!"
+				redirect_to admin_product_product_photos_url(@product) 
+			end
+			format.js { render :nothing => true }
+		end
   end
   
-  def update
-    @product_photos = ProductPhotos.find(params[:id])
-    if @product_photos.update_attributes(params[:product_photos])
-      flash[:notice] = "Successfully updated product photos."
-      redirect_to product_photos_url
-    else
-      render :action => 'edit'
+  def positions
+    @product_photos = @product.photos.find(params[:photo])
+    params[:photo].each_with_index do |photo_id, index|
+    	@product_photos.each do |photo|
+    		if photo.id == photo_id.to_i
+    			photo.position = index
+					photo.save
+    		end
+    	end
     end
+
+		render :nothing => true
   end
 
 	protected 

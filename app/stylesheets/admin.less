@@ -9,6 +9,12 @@
   -webkit-box-shadow: @type;
 }
 
+.box_shadow(@x: 0, @y:0, @blur: 0, @color: transaprent) {
+	box-shadow: @x @y @blur @color;
+	-moz-box-shadow: @x @y @blur @color;
+	-webkit-box-shadow: @x @y @blur @color;
+}
+
 .rounded_corners(@size:5px) {
 	-webkit-border-radius: @size;
 	-moz-border-radius: @size;
@@ -706,28 +712,53 @@ a:hover {
     }
 
 .block .block_content .imglist li {
-    padding: 0;
-    margin: 0;
-    background: 0;
-    width: 100px;
-    height: 100px;
-    display: block;
-    float: left;
-    position: relative;
-    margin: 13px 17px 10px 10px;
-    border: 1px solid #ccc;
-    padding: 1px;
-    box-shadow: 0 0 3px #ccc;
-    -moz-box-shadow: 0 0 3px #ccc;
-    -webkit-box-shadow: 0 0 3px #ccc;
-    }
-    
+	padding: 0;
+	margin: 0;
+	background: 0;
+	width: 100px;
+	height: 100px;
+	display: block;
+	float: left;
+	position: relative;
+	margin: 9px 12px 5px 5px;
+	border: 1px solid #ccc;
+	padding: 1px;
+	.box_shadow(0 0 3px #ccc);
+}
+
+.block .block_content .imglist li.upload_photo {
+	.box_shadow(none);
+	.rounded_corners(3px);
+	border: 2px dashed #ccc;
+	font-size: 32px;
+	color: #ccc;
+	text-align: center;
+	line-height: 100px;
+	cursor: pointer;
+}
+
+.block .block_content .imglist li iframe { display: none; }
+
+.block .block_content .imglist li.upload_photo input {
+	cursor: pointer;
+	border: 0px;
+	height: 100px;
+	position: absolute;
+	width: 100px;
+	opacity: 0;
+}
+
+.block .block_content .imglist li.uploading {
+	background: #fff url('/images/admin/uploading.gif') no-repeat center center;
+}
+
 .block .block_content .imglist li img {
-    position: absolute;
-    z-index: 1;
-    width: 100px;
-    height: 100px;
-    }
+	position: absolute;
+	z-index: 1;
+	width: 100px;
+	height: 100px;
+	cursor: move;
+}
 
 .block .block_content .imglist li ul {
     position: absolute;
@@ -765,8 +796,8 @@ a:hover {
 	outline: none;
 }
     
-.block .block_content .imglist li ul li.view a:hover { background: url(../images/admin/imgt.gif) bottom center no-repeat; }
-.block .block_content .imglist li ul li.delete a:hover { background: url(../images/admin/imgb.gif) top center no-repeat; }
+.block .block_content .imglist li ul li.view a:hover { background: url(/images/admin/imgt.gif) bottom center no-repeat !important; }
+.block .block_content .imglist li ul li.delete a:hover { background: url(/images/admin/imgb.gif) top center no-repeat !important; }
 
 
 /* Footer */

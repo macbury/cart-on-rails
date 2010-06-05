@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.with_options :name_prefix => 'admin_', :namespace => 'admin/', :subdomain => 'admin', :conditions => { :subdomain => 'admin' } do |admin|
     admin.resources :products, :collection => { :suggest_tag => :any } do |product|
-    	product.resources :product_photos
+    	product.resources :product_photos, :collection => { :positions => :post }
     end
     admin.resources :themes
 		admin.resources :properties

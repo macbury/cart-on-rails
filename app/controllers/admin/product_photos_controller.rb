@@ -26,7 +26,7 @@ class Admin::ProductPhotosController < ApplicationController
 		respond_to do |format|
 			format.html do 
 				flash[:notice] = "Zdjęcie zostało usunięte!"
-				redirect_to admin_product_product_photos_url(@product) 
+				redirect_to admin_product_photos_url(@product) 
 			end
 			format.js { render :nothing => true }
 		end
@@ -46,9 +46,4 @@ class Admin::ProductPhotosController < ApplicationController
 		render :nothing => true
   end
 
-	protected 
-		
-		def preload_product
-			@product = @shop.products.find_by_permalink!(params[:product_id])
-		end
 end

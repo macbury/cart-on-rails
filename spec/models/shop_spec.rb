@@ -49,5 +49,6 @@ describe Shop do
 		shop = Factory.create(:good_shop)
 		owner = shop.users.first
 		owner.role_symbols.include?(:owner).should == true
+		shop.destroy
 	end
 end

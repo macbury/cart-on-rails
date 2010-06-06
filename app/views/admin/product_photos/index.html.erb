@@ -34,7 +34,7 @@
 					<%= render :partial => "admin/product_photos/photo", :collection => @product_photos %>
 
 					<li class="upload_photo">
-						<% form_for Photo.new, :url => admin_product_product_photos_path(@product), :html => { :multipart => true, :id => "new_photo"} do |f| %>
+						<% form_for Photo.new, :url => admin_product_photos_path(@product), :html => { :multipart => true, :id => "new_photo"} do |f| %>
 							<%= f.file_field :image %>
 						<% end %>
 						+

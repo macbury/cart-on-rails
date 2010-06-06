@@ -1,4 +1,7 @@
 var products_controller = {
+	property_template: "",
+	new_property_template: "",
+	
 	init: function(){
 		$('#photo_image').change(function(e){
 			$('#new_photo').submit();
@@ -13,7 +16,7 @@ var products_controller = {
 				if (data != '') {
 					$.ajax({
 					  type:'post',
-					  url: '/products/koszulka-old-school/product_photos/positions',
+					  url: window.location.pathname + '/positions',
 						data: data
 					});
 				};
@@ -71,11 +74,42 @@ var products_controller = {
 			});
 		});
 		
+		$('#add_property').click(function () {
+			var selected = $('#new_property_ :selected');
+			if (selected.val() != "") {
+				var new_property = $(products_controller.property_template);
+				new_property.find(".name").attr("option_id", selected.val()).text(selected.text());
+				new_property.find(".value input:text").attr("name", "property["+selected.val()+"]").removeAttr("id");
+				$('.properties_editor tbody').append(new_property);
+				selected.remove();
+			} else {
+				var new_property = $(products_controller.new_property_template);
+				$('.properties_editor tbody').append(new_property);
+			}
+			
+			return false;
+		});
+		
+		$('.properties_editor tbody a.delete').live("click", function () {
+			var tr = $(this).parents("tr");
+			
+			if (tr.attr("class") == "property") {
+				var option = $("<option></option>");
+				option.attr("value", tr.find(".name").attr("option_id"));
+				option.text(tr.find(".name").text());
+				$('#new_property_').append(option);
+			}
+			
+			tr.remove();
+			return false;
+		});
+		
 		$('#product_description').wysiwyg();
 		$($('#product_description_input iframe').document()).find("body").css({ 
 			"font-size": "10px",
 			"font-family": '"Lucida Grande", Verdana, Arial, sans-serif'
 		});
+		
 	},
 	
 	bindFancyBox: function(){

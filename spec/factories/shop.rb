@@ -1,6 +1,4 @@
-Factory.define :good_shop, :class => Shop do |f|
-  f.title "GeekGadgets"
-	f.domain "gadzety" 
+Factory.define :scaffold_shop, :class => Shop do |f|
 	f.first_name "Arkadiusz"
   f.last_name "Buras"
 	f.sex true
@@ -13,6 +11,16 @@ Factory.define :good_shop, :class => Shop do |f|
 	f.email "edek@pedek.pl"
 	f.password "password"
 	f.password_confirmation "password"
+end
+
+Factory.define :good_shop, :class => Shop, :parent => :scaffold_shop do |f|
+  f.title "GeekGadgets"
+	f.domain "geek-gadgets" 
+end
+
+Factory.define :test_shop, :class => Shop, :parent => :scaffold_shop do |f|
+	f.sequence(:title) {|n| "GeekGadgets-#{n}" }
+	f.sequence(:domain) {|n| "geek-gadgets-#{n}" }
 end
 
 Factory.define :bad_shop, :class => Shop do |f|

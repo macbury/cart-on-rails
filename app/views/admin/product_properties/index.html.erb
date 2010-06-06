@@ -1,0 +1,63 @@
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function () {
+		products_controller.property_template = <%= render(:partial => "admin/product_properties/property", :object => Property.new).to_s.inspect %>;
+		products_controller.new_property_template = <%= render(:partial => "admin/product_properties/new_property").to_s.inspect %>;
+		products_controller.init();
+	});
+</script>
+<!-- BLOCK START -->
+	<div class="block withsidebar">
+		<!-- BLOCK HEAD START -->
+		<div class="block_head">
+			<div class="bheadl"></div>
+			<div class="bheadr"></div>
+			
+			<h2>Edycja szczegółów produktu</h2>
+			<ul>
+				<li><%= link_to 'Wróć', admin_products_path %></li>
+			</ul>
+		</div>
+		<!-- BLOCK HEAD END -->
+		
+		<!-- BLOCK CONTENT START -->
+		<div class="block_content">
+			<!-- BLOCK CONTENT SIDEBAR START -->
+			<div class="sidebar">
+				<ul class="sidemenu">
+					<%= sidebar_for_product %>
+				</ul>
+
+			</div>
+			<!-- BLOCK CONTENT SIDEBAR END -->
+			
+			<!-- BLOCK CONTENT SIDEBAR CONTENT START -->
+			<div class="sidebar_content">
+				<% form_tag admin_product_properties_path do %>
+					<table width="100%" cellpading="0" cellspacing="0" class="properties_editor">
+						<tbody>
+							<%= render :partial => "admin/product_properties/property", :collection => @properties %>
+
+						</tbody>
+						<tfoot>
+							<tr>
+								<td class="name">
+									<%= select "new_property", nil, @select_properties.map { |p| [p.name, p.id] }, :include_blank => "[nowy szczegół]" %>
+								</td>
+								<td>
+									<a href="#" id="add_property">Dodaj</a>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+					<%= submit_tag "Zapisz", :class => "submit" %>
+				<% end %>
+			</div>
+			<!-- BLOCK CONTENT SIDEBAR CONTENT END -->
+			
+		</div>
+		<!-- BLOCK CONTENT END -->
+		
+		<div class="bendl"></div>
+		<div class="bendr"></div>
+	</div>
+<!-- BLOCK END -->

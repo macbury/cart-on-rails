@@ -33,6 +33,7 @@
 					<% f.inputs do %>
 						<%= f.input :name %>
 						<%= f.input :tag_list %>
+						<%= f.input :theme_id, :as => :select, :collection => @shop.themes.all(:conditions => { :page_type => 1 }).map { |template| [template.name, template.id] }, :include_blank => 'Standardowy' %>
 						<%= f.input :description %>
 					<% end %>
 

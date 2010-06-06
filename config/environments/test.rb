@@ -10,7 +10,7 @@ config.cache_classes = true
 config.whiny_nils = true
 config.gem "rspec", :lib => false, :version => ">= 1.2.0"
 config.gem "rspec-rails", :lib => false, :version => ">= 1.2.0"
-config.gem "factory_girl"
+config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
 # Show full error reports and disable caching
 config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false

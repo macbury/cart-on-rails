@@ -1,0 +1,9 @@
+<tr class="property">
+	<td class="name" option_id="<%= property.id %>">
+		<%= property.name %>
+	</td>
+	<td class="value">
+		<%= text_field_tag "property[#{property.new_record? ? '' : property.id}]", "value", :value => property.value %>
+		<a href="#" class="delete">Usuń</a>
+	</td>
+</tr>

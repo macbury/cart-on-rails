@@ -83,7 +83,11 @@ class ApplicationController < ActionController::Base
 	def get_store_from_session
 		@shop = self.current_user.shop
 	end
-
+	
+	def preload_product
+		@product = @shop.products.find_by_permalink!(params[:product_id])
+	end
+	
   def render_radius_template(name, variables={})
 		template = @shop.themes.find_by_page_type_and_name(Theme.type_index('Page'), name)
 

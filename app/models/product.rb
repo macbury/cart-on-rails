@@ -44,6 +44,9 @@ class Product < ActiveRecord::Base
 	end
 	
 	def create_properties_from_params!(raw_properties, raw_create_properties)
+		raw_create_properties ||= []
+		raw_properties ||= []
+		
 		self.product_properties.destroy_all
 		
 		unless raw_create_properties.nil?
@@ -86,7 +89,7 @@ class Product < ActiveRecord::Base
   protected
     
 		def apply_prototype
-			return if self.prototype_id.nil?
+			return if self.prototype_id.nil? || self.prototype_id.empty?
 			prototype = self.shop.prototypes.find(prototype_id)
 			
 			prototype.properties.each do |property|

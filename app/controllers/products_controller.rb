@@ -3,7 +3,8 @@ class ProductsController < ApplicationController
 
   def index
     @products = @shop.products.visible.all(:include => [:photos, :tags])
-    
+    @shop_title << "Strona główna"
+
     render_radius_template :collections, nil, { :products => @products }
   end
   
@@ -11,6 +12,7 @@ class ProductsController < ApplicationController
 		begin
     	@product = @shop.products.visible.include_all.find_by_permalink!(params[:id])
 			@product.properties.all
+			@shop_title << @product.name
 		rescue ActiveRecord::RecordNotFound
 			render_radius_template '404', nil, {}
 		else

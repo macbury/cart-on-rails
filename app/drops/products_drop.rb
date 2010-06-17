@@ -178,20 +178,30 @@ class ProductsDrop < Radius::Drop
 	register_tag "photo" do |tag|
 		tag.missing! if tag.locals.photo.nil? || tag.locals.product.nil?
 		photo = tag.locals.photo || tag.locals.product.photo
+		product = tag.locals.product
 		
 		attributes = tag.attributes.clone
 		link = attributes['link'] =~ /true/i
 		size = attributes['size'] || 'original'
+		crop = attributes['crop'] =~ /true/i
+		attributes['alt'] ||= product.name if product
+		attributes.delete('crop')
 		attributes.delete('link')
 		attributes.delete('size')
 		
-		unless (size =~ /original/i || photo.exists_for_size?(size, @shop))
+		unless (size =~ /original/i || photo.exists_for_size?(size, @shop, crop))
 			url = "/images/generating-preview.gif"
 			width, height = photo.size_from_string(size)
 			attributes['width'] = width
 			attributes['height'] = height
+			Delayed::Job.enqueue(PhotoJob.new({
+				:width => width,
+				:height => height,
+				:crop => crop,
+				:id => photo.id
+			}))
 		else
-			url = "/photos/#{photo.folder_name_from_size(size)}/#{photo.file_name}"
+			url = "/photos/#{photo.folder_name_from_size(size,crop)}/#{photo.file_name}"
 		end
 		
 		content = image_tag(url, attributes)

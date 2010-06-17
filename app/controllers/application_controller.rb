@@ -78,6 +78,7 @@ class ApplicationController < ActionController::Base
   
   def get_store
     @shop = Shop.find_by_domain!(current_subdomain)
+		@shop_title = [@shop.title]
   end
   
 	def get_store_from_session
@@ -93,6 +94,7 @@ class ApplicationController < ActionController::Base
 
 		standard_variables = { 
 			:shop => @shop,
+			:shop_title => @shop_title,
 			:title => @shop.title
 		}
 		standard_variables.merge!(variables)

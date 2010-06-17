@@ -19,13 +19,13 @@
 			<table width="100%" cellpading="0" cellspacing="0">
 				<tr>
 					<th>Nazwa</th>
-					<th>Typ</th>
+					<th>Moduł</th>
 					<th> </th>
 				</tr>
 				<% @themes.each do |template| %>
 				<tr>
 					<td><%= link_to template.name.camelize, edit_admin_theme_path(template) %></td>
-					<td><%= template.type_name %></td>
+					<td><%= t("formtastic.labels.themes.modules.#{template.type_name.to_s}") %></td>
 					<td><%= link_to 'usuń', [:admin, template], :method => :delete, :confirm => 'Czy na pewno chcesz usunąć ten szablon?' %></td>
 				</tr>
 				<% end %>

@@ -3,6 +3,11 @@ Factory.define :good_option_type, :class => OptionType do |f|
 	f.name "Kolor ramki"
 end
 
+Factory.define :dynamic_option_type, :class => OptionType do |f|
+	f.sequence(:presentation) {|n| "Test #{n}" }
+	f.sequence(:name) {|n| "Test #{n}" }
+end
+
 Factory.define :bad_option_type, :class => OptionType do |f|
 	f.presentation ""
 	f.name ""

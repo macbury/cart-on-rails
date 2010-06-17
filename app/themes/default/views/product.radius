@@ -1,1 +1,52 @@
-<shop:product />
+<s:product>
+  <div id="product-left">
+    <div id="product-image">
+      <s:photo link="true" />
+    </div>
+    <div class="clear"></div>
+    <s:photos>
+      <div class="product-images">
+        <s:photo size="100x50" crop="true" link="true" />
+      </div>
+    </s:photos>
+  </div>
+  
+  <div id="product-right">
+    <h1><s:name /></h1>
+    <s:description />
+    <ul>
+      <s:properties>
+        <li>
+          <strong><s:property:name />: </strong>
+          <s:property:value />
+        </li>
+      </s:properties>
+    </ul>
+    <form action="/cart/add" method="post">
+      <div id="product-variants">
+        <ul>
+          <s:variants type="radio">
+            <s:cycle through="odds, odd" class="variant" wrap="li">
+              <s:variant>
+                <s:radio class="radio" />
+                <strong><s:name class="radio" /></strong> - 
+                <s:available> 
+                  <span class="bold-blue"><s:price /></span>
+                </s:available>
+                <s:unavailable>
+                   is temporarily unavailable
+                </s:unavailable>
+              </s:variant>
+            </s:cycle>
+          </s:variants>
+        </ul>
+      </div>
+      <input type="image" src="/assets/purchase.png" name="add" value="Purchase" id="purchase" />
+      <a href="/cart"><img src="/assets/checkout.png" /></a>
+    </form>
+    <div id="product-details">
+      <strong>Continue sping</strong><br />
+      Browse more  or additional  products.
+    </div>
+  </div>
+</s:product>​

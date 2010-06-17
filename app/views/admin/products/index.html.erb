@@ -41,7 +41,7 @@
 						<tr>
 							<td><%= link_to product.name, edit_admin_product_path(product) %></td>
 							<td>...</td>
-							<td>Niewidoczny</td>
+							<td><%= product.published ? "Widoczny" : "Niewidoczny" %></td>
 							<td><%= link_to "Usuń", [:admin, product], :method => :delete, :confirm => "Czy na pewno chcesz usunąć produkt?" %></td>
 						</tr>
 						<% end %>

@@ -3,8 +3,9 @@ module Radius
 		include ActionController::UrlWriter
 		include ActionView::Helpers::TagHelper
 		
-		def initialize(locals = {}, drops = [])
+		def initialize(tag_prefix,locals = {}, drops = [])
 			super()
+			@tag_prefix = tag_prefix
 			@drops = {}
 			@locals = {}
 			
@@ -133,7 +134,7 @@ module Radius
 		end
 
 		def parser
-			@parser ||= Radius::Parser.new(self, :tag_prefix => "shop")
+			@parser ||= Radius::Parser.new(self, :tag_prefix => @tag_prefix)
 			@parser
 		end
 

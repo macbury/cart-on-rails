@@ -1,5 +1,7 @@
 name: "Vogue"
-views:
-  layout: ['products', '404', 'product']
-
-snippets: ['sidebar']
+templates:
+  'layout':
+    collections: ['products']
+    product: ['product']
+    not_found: ['404']
+    snippet: ['sidebar']

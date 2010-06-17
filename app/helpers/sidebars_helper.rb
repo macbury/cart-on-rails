@@ -19,7 +19,8 @@ module SidebarsHelper
 		out << sidebar_item_for(:products, "Informacje", edit_admin_product_path(@product))
 		out << sidebar_item_for(:photos, "Zdjęcia", admin_product_photos_path(@product))
 		out << sidebar_item_for(:properties, "Szczegóły", admin_product_properties_path(@product))
-		out << sidebar_item_for(:option_types, "Opcje", admin_product_path(@product))
+		out << sidebar_item_for(:option_types, "Opcje", option_types_admin_product_path(@product))
+		out << sidebar_item_for(:variants, "Warianty", admin_product_variants_path(@product))
 		
 		out.join("\n")
 	end

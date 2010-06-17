@@ -5,21 +5,27 @@ class Product < ActiveRecord::Base
   validates_length_of :name, :within => 3..255
   validates_associated :photos
   
+	named_scope :visible, :conditions => { :published => true }
+	named_scope :include_all, :include => [{:variants => {:option_values => :option_type}}, :photos, :tags]
+	
   is_taggable :tags
   
 	radius_attr_accessible :name, :min_price, :max_price, :description
 	
   has_many :photos, :dependent => :destroy, :order => 'position ASC'
   has_many :product_properties, :dependent => :destroy
+	has_many :variants, :dependent => :destroy, :order => 'position ASC'
 	has_many :properties, :through => :product_properties, :order => "properties.name", :select => '"properties".*, product_properties.value AS value', :uniq => true
-
+	
+	has_and_belongs_to_many :option_types
+	
   belongs_to :shop
   belongs_to :theme
 
   attr_accessor :prototype_id
 	after_create :apply_prototype
-  #before_save :create_category_and_vendor
-  #before_save :cache_price
+	before_update :cache_price
+	after_update :update_variants
 
   def main_photo
     photos.first
@@ -31,6 +37,10 @@ class Product < ActiveRecord::Base
 	
 	def to_param
 		self.permalink
+	end
+	
+	def update_variants
+		self.variants.each(&:refresh_option_values)
 	end
 	
 	def create_properties_from_params!(raw_properties, raw_create_properties)
@@ -67,6 +77,12 @@ class Product < ActiveRecord::Base
 		write_attribute :description, xml
 	end
 	
+	def cache_price
+    prices = variants.map(&:price)
+    self.max_price = prices.max || 0
+    self.min_price = prices.min || 0
+  end
+	
   protected
     
 		def apply_prototype
@@ -76,13 +92,8 @@ class Product < ActiveRecord::Base
 			prototype.properties.each do |property|
 				self.product_properties.create(:property_id => property.id, :value => "")
 			end
+			self.option_types += prototype.option_types
 		end
-
-    def cache_price
-      prices = versions.map(&:price)
-      self.max_price = prices.max || 0
-      self.min_price = prices.min || 0
-    end
     
     def create_category_and_vendor
       self.category = Category.find_or_create_by_name_and_shop_id(@category_name.strip, self.shop_id) if self.category_id.nil? && (!@category_name.nil? || !@category_name.blank?)

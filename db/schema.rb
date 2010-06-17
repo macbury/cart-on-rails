@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100605200349) do
+ActiveRecord::Schema.define(:version => 20100616100734) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(:version => 20100605200349) do
     t.string   "presentation"
   end
 
+  create_table "option_types_products", :id => false, :force => true do |t|
+    t.integer "option_type_id"
+    t.integer "product_id"
+  end
+
   create_table "option_types_prototypes", :id => false, :force => true do |t|
     t.integer "prototype_id"
     t.integer "option_type_id"
@@ -36,6 +41,11 @@ ActiveRecord::Schema.define(:version => 20100605200349) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "option_values_variants", :id => false, :force => true do |t|
+    t.integer "variant_id"
+    t.integer "option_value_id"
   end
 
   create_table "photos", :force => true do |t|
@@ -67,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20100605200349) do
     t.float    "max_price",   :default => 0.0
     t.float    "min_price",   :default => 0.0
     t.integer  "theme_id"
+    t.boolean  "published",   :default => false
   end
 
   create_table "properties", :force => true do |t|
@@ -157,5 +168,16 @@ ActiveRecord::Schema.define(:version => 20100605200349) do
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
+
+  create_table "variants", :force => true do |t|
+    t.integer  "product_id"
+    t.string   "sku"
+    t.integer  "weight"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price"
+    t.integer  "amount"
+  end
 
 end

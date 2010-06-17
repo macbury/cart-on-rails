@@ -15,7 +15,7 @@ describe Product do
 		product.should have(2).errors
   end
 	
-	it "should create product properties from prototype_id" do
+	it "should create product properties and option_types from prototype_id" do
 		shop = Factory.create(:good_shop)
 		
 		prototype = Factory.build(:good_prototype)
@@ -28,12 +28,19 @@ describe Product do
 		
 		prototype.properties << property
 		
+		option_type = Factory.build(:dynamic_option_type)
+		option_type.shop_id = shop.id
+		option_type.save
+		
+		prototype.option_types << option_type
+		
 		product = Factory.build(:dynamic_product)
 		product.shop_id = shop.id
 		product.prototype_id = prototype.id
 		product.save
 		
 		product.properties.should have(1).records
+		product.option_types.should have(1).records
   end
 	
 	it "should create product properties from array" do
@@ -59,4 +66,5 @@ describe Product do
 		product.create_properties_from_params!(properties, create_properties)
 		product.properties.should have(20).records
 	end
+
 end

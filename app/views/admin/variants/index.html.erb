@@ -1,0 +1,72 @@
+<!-- BLOCK START -->
+	<div class="block withsidebar">
+		<!-- BLOCK HEAD START -->
+		<div class="block_head">
+			<div class="bheadl"></div>
+			<div class="bheadr"></div>
+			
+			<h2>Warianty produktu</h2>
+			<ul>
+				<li><%= link_to 'Wróć', admin_products_path %></li>
+			</ul>
+		</div>
+		<!-- BLOCK HEAD END -->
+		
+		<!-- BLOCK CONTENT START -->
+		<div class="block_content">
+			<!-- BLOCK CONTENT SIDEBAR START -->
+			<div class="sidebar">
+				<ul class="sidemenu">
+					<%= sidebar_for_product %>
+				</ul>
+			</div>
+			<!-- BLOCK CONTENT SIDEBAR END -->
+			
+			<!-- BLOCK CONTENT SIDEBAR CONTENT START -->
+			<div class="sidebar_content">
+				<table width="100%" cellpading="0" cellspacing="0">
+					<tbody>
+						<tr>
+							<th>Opcje</th>
+							<th>SKU</th>
+							<th>Cena</th>
+							<th>Waga</th>
+							<td> </td>
+						</tr>
+						<% for variant in @variants %>
+						<tr>
+							<td>
+								<%= variant.option_values.map { |option_value| "#{option_value.option_type.presentation}: #{option_value.name}" }.join(", ") %>
+							</td>
+							<td><%= variant.sku %></td>
+							<td><%= variant.price %></td>
+							<td><%= variant.weight %></td>
+							<td>
+								<%= link_to "Edytuj", edit_admin_product_variant_path(@product, variant) %>
+								 | 
+								<%= link_to "Usuń", [:admin, @product, variant], :method => :delete, :confirm => "Czy na pewno chcesz usunąć ten wariant?" %>
+							</td>
+						</tr>
+						<% end %>
+						<tr>
+							<td colspan="5">
+								<% if @product.option_types.count == 0 %>
+									<%= link_to "Aby dodać wariant musisz zdefiniować opcje wariantu", option_types_admin_product_path(@product) %>
+								<% else %>
+									<%= link_to "Nowy wariant", new_admin_product_variant_path(@product) %>
+								<% end %>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+			<!-- BLOCK CONTENT SIDEBAR CONTENT END -->
+			
+		</div>
+		<!-- BLOCK CONTENT END -->
+		
+		<div class="bendl"></div>
+		<div class="bendr"></div>
+	</div>
+<!-- BLOCK END -->

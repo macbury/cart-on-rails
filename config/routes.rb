@@ -1,8 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   map.with_options :name_prefix => 'admin_', :namespace => 'admin/', :subdomain => 'admin', :conditions => { :subdomain => 'admin' } do |admin|
-    admin.resources :products, :collection => { :suggest_tag => :any } do |product|
+    admin.resources :products, :collection => { :suggest_tag => :any }, :member => { :option_types => :get } do |product|
     	product.resources :photos, :collection => { :positions => :post }, :controller => "product_photos"
 			product.resources :properties, :controller => "product_properties"
+			product.resources :variants
     end
     admin.resources :themes
 		admin.resources :properties
@@ -33,7 +34,6 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing the them or commenting them out if you're using named routes and resources.
   
-  map.photo '/photos/:size/:id.:format', :controller => 'photos', :action => 'generate_photo'
   map.root :controller => "start", :subdomain => false
   
   map.connect ':controller/:action/:id'

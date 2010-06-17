@@ -1,5 +1,6 @@
 class Theme < ActiveRecord::Base
-	@@types = ['Layout', 'Page', 'Snippet']
+	@@types = [:layout, :page, :snippet, :collections, :product, :not_found, :cart, :search]
+	
   belongs_to :shop
 	has_many :themes, :class_name => "Theme", :foreign_key => "layout_id", :dependent => :nullify
 	has_many :products, :dependent => :nullify
@@ -9,34 +10,39 @@ class Theme < ActiveRecord::Base
   xss_terminate :except => [:content]
   validates_inclusion_of :page_type, :in => 0..@@types.size
 
-  
 	attr_protected :shop_id, :default
+	
+	def self.type_index(t)
+		index = 0
+    @@types.each_with_index do |pt,i|
+			index = i if pt.to_s =~ /#{t.to_s}/i
+		end
+		
+		index
+  end
+	
+	named_scope :product_type_theme, :conditions => { :page_type => Theme.type_index(:product)}
 	
 	def self.install_template_for_shop(name, shop)
 		template_path = Theme.default_template_path(name)
 		FileUtils.cp_r(File.join([template_path,'/assets/']), shop.public_folder_path)
 		template_config = YAML.load_file(File.join([template_path,'config.yml']))
-		template_config['views'].each do |layout_name, pages_for_layout|
-			layout = shop.themes.new(:name => layout_name, :page_type => Theme.type_index('Layout'))
+		template_config['templates'].each do |layout_name, pages_type|
+			layout = shop.themes.new(:name => layout_name, :page_type => Theme.type_index(:layout))
 			layout.default = true
 			layout.load_content_from_file(File.join([template_path,'/views/', "#{layout_name}.radius"]))
 			
 			if layout.save
-				pages_for_layout.each do |page_name|
-					page = shop.themes.new(:name => page_name, :page_type => Theme.type_index('Page'), :layout_id => layout.id)
-					page.default = true
-					page.load_content_from_file(File.join([template_path,'/views/', "#{page_name}.radius"]))
+				pages_type.each do |type, pages|
+					pages.each do |page_name|
+						page = shop.themes.new(:name => page_name, :page_type => Theme.type_index(type), :layout_id => layout.id)
+						page.default = true
+						page.load_content_from_file(File.join([template_path,'/views/', "#{page_name}.radius"]))
 
-					page.save
-				end	
+						page.save
+					end
+				end
 			end
-		end
-		
-		template_config['snippets'].each do |snippet_name|
-			snippet = shop.themes.new(:name => snippet_name, :page_type => Theme.type_index('Snippet'))
-			snippet.default
-			snippet.load_content_from_file(File.join([template_path,'/views/', "#{snippet_name}.radius"]))
-			snippet.save
 		end
 	end
 	
@@ -61,15 +67,6 @@ class Theme < ActiveRecord::Base
   
   def self.type_name(t)
     @@types.at(t.to_i)
-  end
-  
-	def self.type_index(t)
-		index = 0
-    @@types.each_with_index do |pt,i|
-			index = i if pt =~ /#{t}/i
-		end
-		
-		index
   end
 
   def type_name

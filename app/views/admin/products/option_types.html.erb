@@ -10,7 +10,7 @@
 			<div class="bheadl"></div>
 			<div class="bheadr"></div>
 			
-			<h2>Edycja produkt</h2>
+			<h2>Edycja opcji produktu</h2>
 			<ul>
 				<li><%= link_to 'Wróć', admin_products_path %></li>
 			</ul>
@@ -24,22 +24,18 @@
 				<ul class="sidemenu">
 					<%= sidebar_for_product %>
 				</ul>
+				<p>Ustal jakiego typu opcje mogą pojawić się w wariantach</p>
 			</div>
 			<!-- BLOCK CONTENT SIDEBAR END -->
 			
 			<!-- BLOCK CONTENT SIDEBAR CONTENT START -->
 			<div class="sidebar_content">
-				<% semantic_form_for [:admin, @product], :html => { :multipart => true, :id => "product_form" } do |f| %>
+				<% semantic_form_for([:admin, @product]) do |f| %>
 					<% f.inputs do %>
-						<%= f.input :name %>
-						<%= f.input :tag_list %>
-						<%= f.input :theme_id, :as => :select, :collection => @shop.themes.product_type_theme.all.map { |template| [template.name, template.id] }, :include_blank => 'Standardowy' %>
-						<%= f.input :published %>
-						<%= f.input :description %>
+						<%= f.input :option_types, :as => :check_boxes, :collection => @shop.option_types %>
 					<% end %>
-
 					<hr />
-					<%= f.submit "Zapisz", :class => "submit right" %>
+	 				<%= f.submit 'Zapisz', :class => "submit" %>
 				<% end %>
 			</div>
 			<!-- BLOCK CONTENT SIDEBAR CONTENT END -->
@@ -51,4 +47,3 @@
 		<div class="bendr"></div>
 	</div>
 <!-- BLOCK END -->
-

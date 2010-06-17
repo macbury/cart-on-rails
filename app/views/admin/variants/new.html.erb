@@ -1,8 +1,3 @@
-<script type="text/javascript" charset="utf-8">
-	$(document).ready(function () {
-		products_controller.init();
-	});
-</script>
 <!-- BLOCK START -->
 	<div class="block withsidebar">
 		<!-- BLOCK HEAD START -->
@@ -10,9 +5,9 @@
 			<div class="bheadl"></div>
 			<div class="bheadr"></div>
 			
-			<h2>Edycja produkt</h2>
+			<h2><%= @variant.new_record? ? "Tworzenie nowego wariantu produktu" : "Edycja wariantu produktu" %></h2>
 			<ul>
-				<li><%= link_to 'Wróć', admin_products_path %></li>
+				<li><%= link_to 'Wróć', admin_product_variants_path(@product) %></li>
 			</ul>
 		</div>
 		<!-- BLOCK HEAD END -->
@@ -24,22 +19,24 @@
 				<ul class="sidemenu">
 					<%= sidebar_for_product %>
 				</ul>
+
 			</div>
 			<!-- BLOCK CONTENT SIDEBAR END -->
 			
 			<!-- BLOCK CONTENT SIDEBAR CONTENT START -->
 			<div class="sidebar_content">
-				<% semantic_form_for [:admin, @product], :html => { :multipart => true, :id => "product_form" } do |f| %>
+				<% semantic_form_for([:admin, @product, @variant]) do |f| %>
 					<% f.inputs do %>
-						<%= f.input :name %>
-						<%= f.input :tag_list %>
-						<%= f.input :theme_id, :as => :select, :collection => @shop.themes.product_type_theme.all.map { |template| [template.name, template.id] }, :include_blank => 'Standardowy' %>
-						<%= f.input :published %>
-						<%= f.input :description %>
-					<% end %>
+						<% f.semantic_fields_for :options do |option_field| %>
+							<% @product.option_types.each do |option_type| %>
+								<%= option_type_for_variant(option_field, option_type, @variant) %>
 
+							<% end %>
+						<% end %>
+					<% end %>
+					<%= f.inputs :sku, :weight, :price, :required => false %>
 					<hr />
-					<%= f.submit "Zapisz", :class => "submit right" %>
+	 				<%= f.submit 'Zapisz', :class => "submit" %>
 				<% end %>
 			</div>
 			<!-- BLOCK CONTENT SIDEBAR CONTENT END -->
@@ -51,4 +48,3 @@
 		<div class="bendr"></div>
 	</div>
 <!-- BLOCK END -->
-

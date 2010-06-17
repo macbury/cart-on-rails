@@ -7,6 +7,15 @@ pl:
       shop:
         domain: "Podaj nazwę subdomeny podktórą będzie znajdował się twój sklep"
     labels:
+      themes:
+        modules:
+          layout: "Szablon"
+          snippet: "Skrawek"
+          collections: "Produkty"
+          product: "Produkt"
+          cart: "Koszyk"
+          not_found: "404"
+          search: "Wyszukiwarka"
       prototype:
         name: "Nazwa"
       shop:

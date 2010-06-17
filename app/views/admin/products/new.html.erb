@@ -19,7 +19,8 @@
 				<% f.inputs do %>
 					<%= f.input :name %>
 					<%= f.input :prototype_id, :as => :select, :include_blank => true, :collection => @shop.prototypes %>
-					<%= f.input :theme_id, :as => :select, :collection => @shop.themes.all(:conditions => { :page_type => 1 }).map { |template| [template.name, template.id] }, :include_blank => 'Standardowy' %>
+					<%= f.input :theme_id, :as => :select, :collection => @shop.themes.product_type_theme.all.map { |template| [template.name, template.id] }, :include_blank => 'Standardowy' %>
+				
 				<% end %>
 				<hr />
 				<%= f.submit "Dalej", :class => "submit" %>

@@ -1,12 +1,17 @@
 class Admin::ProductsController < ApplicationController
-  tab :products
+  tab :products, :except => :option_types
+	tab :option_types, :only => :option_types
   layout 'admin'
 	
 	before_filter :login_required, :get_store_from_session
 	filter_access_to [:create, :new, :suggest_tag]
-  filter_access_to [:show, :edit, :destroy, :update], :attribute_check => true,
+  filter_access_to [:show, :edit, :destroy, :update, :option_types], :attribute_check => true,
                           :load_method => lambda { @product = @shop.products.find_by_permalink!(params[:id]) }
   
+	def option_types
+		
+	end
+
   def suggest_tag
     @tags = Tag.all(:conditions => { :name.like => "%#{params[:q]}" })
     
@@ -75,7 +80,7 @@ class Admin::ProductsController < ApplicationController
     respond_to do |format|
       if @product.update_attributes(params[:product])
         flash[:notice] = 'Produkt został zapisany!'
-        format.html { redirect_to admin_products_path }
+        format.html { redirect_to edit_admin_product_path(@product) }
         format.xml  { head :ok }
       else
         format.html { render :action => "new" }

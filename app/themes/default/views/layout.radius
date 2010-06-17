@@ -3,14 +3,14 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title><shop:title /></title>
+  <title><s:title /></title>
   <link href="/assets/stylesheet.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
   <div id="header">
     <div class="container">
       <div id="logo">
-        <h1><a href="/"><shop:title /></a></h1>
+        <h1><a href="/"><s:title /></a></h1>
       </div>
       <div id="navigation">
         <ul id="navigate">
@@ -38,7 +38,7 @@
 
   <div id="layout">
     <div class="container">
-      <shop:content />
+      <s:content />
     </div>
   </div>
 
@@ -51,7 +51,7 @@
           <a href="#">Mama</a>
         </div>
         <span id="footer-left">
-          Copyright &copy; {{ "now" | date: "%Y" }} <a href="/">{{ shop.name }}</a>. All Rights Reserved.<br />
+          Copyright &copy; 2010 <a href="/"><s:title /></a>. All Rights Reserved.<br />
           Designed by <a href="http://sofamade.com">Sofamade</a>.
         </span>
       </div>

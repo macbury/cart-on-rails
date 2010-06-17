@@ -88,8 +88,8 @@ class ApplicationController < ActionController::Base
 		@product = @shop.products.find_by_permalink!(params[:product_id])
 	end
 	
-  def render_radius_template(name, variables={})
-		template = @shop.themes.find_by_page_type_and_name(Theme.type_index('Page'), name)
+  def render_radius_template(type, theme_id=nil, variables={})
+		template = @shop.themes.first(:conditions => ["themes.page_type = ? AND ( themes.id = ? OR themes.default = ? )", Theme.type_index(type), theme_id, true], :order => 'themes.default DESC')
 
 		standard_variables = { 
 			:shop => @shop,
@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
 		}
 		standard_variables.merge!(variables)
 
-    parser = Radius::Template.new(standard_variables, [FunctionsDrop, ShopDrop, AssetDrop, TextDrop, ProductsDrop])
+    parser = Radius::Template.new("s", standard_variables, [FunctionsDrop, ShopDrop, AssetDrop, TextDrop, ProductsDrop, TagDrop])
 		
 		parser.define_tag 'snippet' do |tag|
 			snippet_name = tag['name']

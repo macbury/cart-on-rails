@@ -34,4 +34,57 @@ class Photo < ActiveRecord::Base
     RAILS_ROOT + '/public' + self.url
   end
   
+	def url
+		image.url
+	end
+	
+	def folder_name(width, height, crop=false)
+		folder_name = "#{width}x#{height}"
+		folder_name += "_crop" if crop
+		folder_name
+	end
+	
+	def folder_name_from_size(size)
+		if size =~ PHOTO_SCALE_REGEXP
+			folder_name($1, $3, $2)
+		else
+			"original"
+		end
+	end
+	
+	def size_from_string(size)
+		if size =~ PHOTO_SCALE_REGEXP
+			[$1, $3]
+		else
+			"original"
+		end
+	end
+	
+	def file_name
+		id.to_s+File.extname(image_file_name)
+	end
+	
+	def exists_for_size?(size, shop=nil)
+		shop = product.shop unless shop
+		File.exists?("#{Rails.root}/public/store_assets/#{shop.domain}/photos/#{folder_name_from_size(size)}/#{file_name}")
+	end
+	
+	def generate_photo_for_size(width, height, crop=false)
+    size = "#{width}x#{height}"
+		folder = folder_name(width,height,crop)
+		file_path = "#{RAILS_ROOT}/public/store_assets/#{product.shop.domain}/photos/#{folder}/#{self.id}.#{File.extname(self.image_file_name)}"
+		
+		Dir.mkdir(File.join([shop.public_folder_path, "/photos/#{folder}/"])) rescue true
+		thumb = Paperclip::Thumbnail.new(File.new(self.source), :geometry => size)
+		tmp_thumb = thumb.make
+
+		File.open(file_path, "a") do |file|
+			tmp_thumb.rewind
+			file.write tmp_thumb.read
+		end
+		tmp_thumb.close
+		
+		file_path
+  end
+
 end

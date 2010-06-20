@@ -42,7 +42,7 @@ class Admin::ThemesController < ApplicationController
 
     if @page_template.update_attributes(params[:theme])
       flash[:notice] = 'Szablon został zapisany'
-			redirect_to admin_themes_path
+			render :action => "new"
     else
       render :action => "new"
     end

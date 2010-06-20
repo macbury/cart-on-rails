@@ -45,6 +45,18 @@ class Shop < ActiveRecord::Base
 		Dir.mkdir(public_folder_path) rescue true
 	end
 	
+	def space_consumed
+		size = 0
+		Dir.glob(File.join([public_folder_path, "/**/*"])).each do |filename|
+			size += File.size(filename)
+		end
+		size
+	end
+	
+	def space_left
+		50.megabytes - space_consumed
+	end
+	
 	def create_owner
 		u = self.users.create(:email => self.email, :password => self.password, :password_confirmation => self.password_confirmation)
 		u.owner!

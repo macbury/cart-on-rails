@@ -20,4 +20,10 @@ class ProductsController < ApplicationController
 		end
 
   end
+
+	def qr_code
+		@product = @shop.products.visible.include_all.find_by_permalink!(params[:id])
+		
+		redirect_to "http://chart.apis.google.com/chart?chs=300x300&cht=qr&chl=#{product_url(@product)}&choe=UTF-8"
+	end
 end

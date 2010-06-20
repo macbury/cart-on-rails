@@ -94,12 +94,11 @@ class ApplicationController < ActionController::Base
 
 		standard_variables = { 
 			:shop => @shop,
-			:shop_title => @shop_title,
-			:title => @shop.title
+			:shop_title => @shop_title
 		}
 		standard_variables.merge!(variables)
 
-    parser = Radius::Template.new("s", standard_variables, [FunctionsDrop, ShopDrop, AssetDrop, TextDrop, ProductsDrop, TagDrop])
+    parser = Radius::Template.new("s", standard_variables, [FunctionsDrop, ShopDrop, AssetDrop, TextDrop, ProductsDrop, TagDrop, PagesDrop])
 		
 		parser.define_tag 'snippet' do |tag|
 			snippet_name = tag['name']

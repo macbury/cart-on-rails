@@ -1,7 +1,7 @@
 <s:product>
   <div id="product-left">
     <div id="product-image">
-      <s:photo link="true" />
+      <s:photo link="true" size="360x240" />
     </div>
     <div class="clear"></div>
     <s:photos>
@@ -49,4 +49,4 @@
       Browse more  or additional  products.
     </div>
   </div>
-</s:product>​
+</s:product>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​

@@ -63,9 +63,7 @@ class ProductsDrop < Radius::Drop
 		elsif type="select"
 			options = []
 			variants.each do |variant|
-				variant_name = variant.option_values.map { |option_value| "#{option_value.option_type.presentation}: #{option_value.name}" }.join(", ")
-				variant_name += " - cena #{number_to_currency(variant.price)}"
-				options << [variant_name, variant.id]
+				options << ["#{variant.name} - cena #{number_to_currency(variant.price)}", variant.id]
 			end
 			
 			content = select("cart", "variant", options, { :include_blank => false }, attributes)
@@ -109,9 +107,7 @@ class ProductsDrop < Radius::Drop
 		attributes = tag.attributes.clone
 		attributes.delete("for")
 		
-		variant_name = variant.option_values.map { |option_value| "#{option_value.option_type.presentation}: #{option_value.name}" }.join(", ")
-		
-		content_tag :label, variant_name, attributes.merge(:for => "cart_variant_#{variant.id}")
+		content_tag :label, variant.name, attributes.merge(:for => "cart_variant_#{variant.id}")
 	end
 	
 	register_tag "variant:price" do |tag|
@@ -128,7 +124,6 @@ class ProductsDrop < Radius::Drop
 		tag.locals.product rescue tag.missing!
 		
 		product = tag.locals.product
-		
 		if product.max_price.round == product.min_price.round
 			number_to_currency(tag.locals.product.max_price)
 		else
@@ -173,6 +168,15 @@ class ProductsDrop < Radius::Drop
 		content
 	end
 	
+	register_tag "product:qr-code" do |tag|
+		product = tag.locals.product rescue tag.missing!
+		attributes = tag.attributes.clone
+		size = attributes['size'] || "150x150"
+		attributes.delete('size')
+		
+		image_tag(qr_code_product_path(product), attributes)
+	end
+	
 	# attributes: size describe size by this syntax widthXheight ex. 128x64
 	# optional attribute crop.
 	register_tag "photo" do |tag|
@@ -189,9 +193,14 @@ class ProductsDrop < Radius::Drop
 		attributes.delete('link')
 		attributes.delete('size')
 		
-		unless (size =~ /original/i || photo.exists_for_size?(size, @shop, crop))
+		if photo.nil?
+			url = "/images/no-pre.png"
+			width, height = Photo.size_from_string(size)
+			attributes['width'] = width
+			attributes['height'] = height
+		elsif !(size =~ /original/i || photo.exists_for_size?(size, @shop, crop))
 			url = "/images/generating-preview.gif"
-			width, height = photo.size_from_string(size)
+			width, height = Photo.size_from_string(size)
 			attributes['width'] = width
 			attributes['height'] = height
 			Delayed::Job.enqueue(PhotoJob.new({
@@ -206,12 +215,16 @@ class ProductsDrop < Radius::Drop
 		
 		content = image_tag(url, attributes)
 		
-		if link
+		if link && photo
 			attributes[:href] = "/photos/original/#{photo.file_name}"
 			content = content_tag(:a, content, attributes) 
 		end
 		
 		content
+	end
+	
+	register_array "popular-products" do |tag|
+		return @shop.products.visible.popular
 	end
 	
 end

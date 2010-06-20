@@ -18,17 +18,22 @@ class Variant < ActiveRecord::Base
 		true
 	end
 	
+	def name
+		if option_values.empty?
+			product.name
+		else
+			option_values.map { |option_value| "#{option_value.option_type.presentation}: #{option_value.name}" }.join(", ")
+		end
+		
+	end
+	
 	def refresh_option_values
 		stay = product.option_types.map(&:id)
 		option_values.each do |option_value|
 			option_values.delete(option_value) unless stay.include?(option_value.option_type_id)
 		end
 		
-		if option_values.size == 0
-			destroy
-		else
-			product.cache_price
-		end
+		destroy if option_values.size == 0 && stay.size > 0
 	end
 	
 	def update_option_values

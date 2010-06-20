@@ -31,7 +31,7 @@ class Photo < ActiveRecord::Base
   end
   
   def source
-    RAILS_ROOT + '/public' + self.url
+    File.join([Rails.root,'public',self.url]).gsub(/(\?\d+)/, '')
   end
   
 	def url
@@ -52,9 +52,9 @@ class Photo < ActiveRecord::Base
 		end
 	end
 	
-	def size_from_string(size)
+	def self.size_from_string(size)
 		if size =~ PHOTO_SCALE_REGEXP
-			[$1, $3]
+			[$1.to_i, $3.to_i]
 		else
 			"original"
 		end
@@ -69,17 +69,19 @@ class Photo < ActiveRecord::Base
 			File.exists?("#{Rails.root}/public/store_assets/#{shop.domain}/photos/#{folder_name_from_size(size, crop)}/#{file_name}")
 	end
 	
+	def folder_path(width,height,crop=false)
+		File.join([product.shop.public_folder_path, "/photos/", folder_name(width,height,crop)])
+	end
+	
 	def generate_photo_for_size(width, height, crop=false)
     size = "#{width}x#{height}"
 		size += crop ? '#' : '>'
-		folder = folder_name(width,height,crop)
-		file_path = "#{Rails.root}/public/store_assets/#{product.shop.domain}/photos/#{folder}/#{file_name}"
+		folder = folder_path(width,height,crop)
+		file_path = File.join([folder, file_name])
 		
 		return if File.exists?(file_path)
-		
-		folder_path = File.join([product.shop.public_folder_path, "/photos/", folder_name(width,height,crop)])
-		logger.info "Creating dir: #{folder_path}"
-		FileUtils.mkdir_p(folder_path) rescue nil
+
+		FileUtils.mkdir_p(folder) rescue nil
 		
 		thumb = Paperclip::Thumbnail.new(File.new(self.source), :geometry => size)
 		tmp_thumb = thumb.make

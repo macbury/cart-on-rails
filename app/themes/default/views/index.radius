@@ -1,10 +1,14 @@
 <div id="layout-left">
-  <h1>Nasze produkty</h1>
-  <s:empty for="products">
-    <p>Brak Produktów</p>
-  </s:empty>
-  <div class="clear"></div>
-  <s:products>
+	<div id="about-excerpt">
+		<h2>Witamy w sklepie "<s:shop:title />"</h2>
+		<s:page name="o-nas">
+			<s:truncate length="270">
+				<s:strip-html><s:content /></s:strip-html>
+			</s:truncate>
+		</s:page> <s:page name="o-nas" link="true">Dowiedz się więcej</s:page>
+	</div>
+
+	<s:products>
     <div style="float:left; margin: 5px">
       <div class="gallery-image">
         <s:product link="true">

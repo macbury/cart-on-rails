@@ -83,7 +83,7 @@ class Admin::ProductsController < ApplicationController
         format.html { redirect_to edit_admin_product_path(@product) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => "edit" }
         format.xml  { render :xml => @product.errors, :status => :unprocessable_entity }
       end
     end

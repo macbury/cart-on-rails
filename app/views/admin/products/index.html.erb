@@ -33,14 +33,12 @@
 					<tbody>
 						<tr>
 							<th>Nazwa</th>
-							<th>SKU</th>
 							<th>Status</th>
 							<td> </td>
 						</tr>
 						<% for product in @products %>
 						<tr>
 							<td><%= link_to product.name, edit_admin_product_path(product) %></td>
-							<td>...</td>
 							<td><%= product.published ? "Widoczny" : "Niewidoczny" %></td>
 							<td><%= link_to "Usuń", [:admin, product], :method => :delete, :confirm => "Czy na pewno chcesz usunąć produkt?" %></td>
 						</tr>

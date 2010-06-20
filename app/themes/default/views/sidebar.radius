@@ -1,30 +1,33 @@
-<div id="layout-right">	
-	<h3>Najczęściej kupowane</h3>
-	<ul id="featuring">
-		<s:popular_products>
-		<li class="featuring-list">
-			<div class="featuring-image">
-				<s:product link="true">
-	        <s:photo size="32x32" crop="true" />
-	      </s:product>
-			</div>
-			<div class="featuring-info">
-				<s:product />
-				<small><s:product:price /></small>
-			</div>
-		</li>
-		</s:popular_products>
-	</ul>
-	<h3>Kategorie</h3>
-	<ul id="collections">
-		<s:categories>
-			<li><s:category /></li>
-		</s:categories>
-	</ul>
-	<h3>Producenci</h3>
-	<ul id="collections">
-		<s:vendors>
-			<li><s:vendor /></li>
-		</s:vendors>
-	</ul>
-</div>
+<div id="layout-right">  
+  <h3>Najczęściej kupowane</h3>
+  <ul id="featuring">
+    <s:popular-products>
+    <li class="featuring-list">
+      <div class="featuring-image">
+        <s:product link="true">
+          <s:photo size="32x32" crop="true" />
+        </s:product>
+      </div>
+      <div class="featuring-info">
+        <s:product link="true">
+          <s:truncate length="20"><s:product:name /></s:truncate>
+        </s:product>
+        <br />
+        <small><s:product:price /></small>
+      </div>
+    </li>
+    </s:popular-products>
+  </ul>
+  <h3>Kategorie</h3>
+  <ul id="collections">
+    <s:categories>
+      <li><s:category /></li>
+    </s:categories>
+  </ul>
+  <h3>Producenci</h3>
+  <ul id="collections">
+    <s:vendors>
+      <li><s:vendor /></li>
+    </s:vendors>
+  </ul>
+</div>​

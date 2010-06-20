@@ -15,6 +15,13 @@ describe Product do
 		product.should have(2).errors
   end
 	
+	it "should clean html description and output polish characters" do
+		product = Product.new
+
+		product.description = "To jest test z literkami ąźżćńółę"
+		product.description.should == "To jest test z literkami ąźżćńółę"
+	end
+	
 	it "should create product properties and option_types from prototype_id" do
 		shop = Factory.create(:good_shop)
 		
@@ -36,7 +43,7 @@ describe Product do
 		
 		product = Factory.build(:dynamic_product)
 		product.shop_id = shop.id
-		product.prototype_id = prototype.id
+		product.prototype_id = prototype.id.to_s
 		product.save
 		
 		product.properties.should have(1).records
@@ -67,4 +74,16 @@ describe Product do
 		product.properties.should have(20).records
 	end
 
+	it "should publish product" do
+		product = Factory.create(:dynamic_product)
+		product.published = true
+		product.valid?.should == false
+		
+		product.should have(1).error_on(:published)
+		
+		product.variants << Factory.create(:good_variant)
+		
+		product.published = true
+		product.valid?.should == true
+	end
 end

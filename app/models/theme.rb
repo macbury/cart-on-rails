@@ -1,5 +1,5 @@
 class Theme < ActiveRecord::Base
-	@@types = [:layout, :page, :snippet, :collections, :product, :not_found, :cart, :search]
+	@@types = [:layout, :page, :snippet, :collections, :product, :not_found, :cart, :search, :index, :collection]
 	
   belongs_to :shop
 	has_many :themes, :class_name => "Theme", :foreign_key => "layout_id", :dependent => :nullify
@@ -21,7 +21,7 @@ class Theme < ActiveRecord::Base
 		index
   end
 	
-	named_scope :product_type_theme, :conditions => { :page_type => Theme.type_index(:product)}
+	named_scope :product_type_theme, :conditions => { :page_type => Theme.type_index(:product), :default => false }
 	
 	def self.install_template_for_shop(name, shop)
 		template_path = Theme.default_template_path(name)

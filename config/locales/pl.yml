@@ -16,6 +16,8 @@ pl:
           cart: "Koszyk"
           not_found: "404"
           search: "Wyszukiwarka"
+          index: "Strona główna"
+          page: "Strona"
       prototype:
         name: "Nazwa"
       shop:

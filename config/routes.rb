@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
 		admin.resources :properties
 		admin.resources :prototypes
 		admin.resources :option_types
-    admin.root :controller => "products", :action => 'index', :subdomain => 'admin'
+    admin.root :controller => "dashboard", :action => 'index', :subdomain => 'admin'
   end
   
   map.resources :user_sessions
@@ -22,9 +22,9 @@ ActionController::Routing::Routes.draw do |map|
 	map.register '/register', :controller => 'shops', :action => 'new'
   
   map.with_options :conditions => { :subdomain => /.+/ } do |shop|
-    shop.root :controller => "products", :action => 'index'
+    shop.root :controller => "pages", :action => 'index'
     #shop.product "/:id", :controller => "products", :action => 'show'
-		shop.resources :products
+		shop.resources :products, :member => { :qr_code => :get }
 		shop.resources :tags
   end
   

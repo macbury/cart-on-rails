@@ -4,9 +4,10 @@ class Product < ActiveRecord::Base
   validates_presence_of :name
   validates_length_of :name, :within => 3..255
   validates_associated :photos
-  
-	named_scope :visible, :conditions => { :published => true }
+
+	named_scope :visible, :conditions => { :published => true }, :include => [:photos, :tags]
 	named_scope :include_all, :include => [{:variants => {:option_values => :option_type}}, :photos, :tags]
+	named_scope :popular, :conditions => {}
 	
   is_taggable :tags
   
@@ -19,14 +20,22 @@ class Product < ActiveRecord::Base
 	
 	has_and_belongs_to_many :option_types
 	
+	validate :must_have_one_variant_before_publishing
+	
   belongs_to :shop
   belongs_to :theme
 
   attr_accessor :prototype_id
 	after_create :apply_prototype
-	before_update :cache_price
-	after_update :update_variants
-
+	before_update :update_variants
+	
+	def must_have_one_variant_before_publishing
+		if published == true && variants.size == 0
+			published = false
+			errors.add :published, 'musisz posiadać przynajmniej jeden wariant tego produktu'
+		end
+	end
+	
   def main_photo
     photos.first
   end
@@ -41,6 +50,7 @@ class Product < ActiveRecord::Base
 	
 	def update_variants
 		self.variants.each(&:refresh_option_values)
+		self.cache_price
 	end
 	
 	def create_properties_from_params!(raw_properties, raw_create_properties)
@@ -75,13 +85,16 @@ class Product < ActiveRecord::Base
 			tidy.options.enclose_text = true
 			tidy.options.clean = true
 			tidy.options.show_body_only = true
+			tidy.options.input_encoding = "WINDOWS-1250"
+			tidy.options.output_encoding = "UTF-8"
 		  xml = tidy.clean(new_description)
 		end
-		write_attribute :description, xml
+		write_attribute :description, new_description
 	end
 	
 	def cache_price
     prices = variants.map(&:price)
+		self.published = !prices.empty? if self.published
     self.max_price = prices.max || 0
     self.min_price = prices.min || 0
   end
